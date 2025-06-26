@@ -48,7 +48,8 @@ A full-featured **Node.js + Express** backend for tracking user subscriptions, s
 
 - Reminder emails are sent:
   - 7 days before renewal
-  - 3 days before
+  - 5 days before
+  - 2 days before
   - 1 day before
 - Powered by **Upstash Workflow**
 - Emails sent via **Nodemailer**
@@ -71,8 +72,12 @@ A full-featured **Node.js + Express** backend for tracking user subscriptions, s
 git clone https://github.com/yourusername/subscription-tracker-api.git
 cd subscription-tracker-api
 
+---
+
 ### 2. Install dependencies
 npm install
+
+---
 
 ### 3. Setup environment variables
 Create a .env.development and .env.production as needed:
@@ -92,16 +97,21 @@ SERVER_URL=http://localhost:5000
 
 Use npx @upstash/qstash-cli dev during local dev and switch to production tokens later.
 
+---
+
 ### 4. Run the App
 
 npm run dev
 
+---
 
 ### 📡 Testing with Ngrok
 For webhook or Upstash integration:
 
 npx ngrok http 5000
 Update SERVER_URL in .env with the generated public URL for Upstash to call your workflow.
+
+---
 
 ### 🧪 Testing with Postman
 Use cookies to authenticate
@@ -110,18 +120,26 @@ Add jwt cookie manually or use login flow
 
 Attach Authorization if needed for Arcjet headers
 
-Roles & Permissions
+---
+
+### Roles & Permissions
 User: Can manage own subscriptions
 
 Admin: Can view all subscriptions, upcoming renewals, and system-level actions
 
-📬 Contribution
+---
+
+### 📬 Contribution
 PRs and issues welcome! Please open one for bugs, ideas, or improvements.
 
-📄 License
+---
+
+### 📄 License
 MIT License
 
-🧠 Credits
+---
+
+### 🧠 Credits
 Upstash QStash
 
 Nodemailer
@@ -130,6 +148,7 @@ Arcjet
 
 Google Developers
 
+---
 
 
 
