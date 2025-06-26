@@ -146,8 +146,8 @@ Update `SERVER_URL` in your `.env` file with the generated public URL for Upstas
 
 | Method | Path | Description |
 | --- | --- | --- |
-| POST | /api/v1/auth/register | Register a new user |
-| POST | /api/v1/auth/login | Login an existing user |
+| POST | /api/v1/auth/sign-up | Register a new user |
+| POST | /api/v1/auth/sign-in | Login an existing user |
 | GET | /auth/google | Initiate Google OAuth |
 | GET | /auth/google/callback | Google OAuth callback |
 | GET | /api/v1/users | Get all users (Admin only) |
@@ -157,7 +157,7 @@ Update `SERVER_URL` in your `.env` file with the generated public URL for Upstas
 | GET | /api/v1/subscriptions/:id | Get a single subscription |
 | PUT | /api/v1/subscriptions/:id | Update a subscription |
 | DELETE | /api/v1/subscriptions/:id | Delete a subscription |
-| POST | /api/v1/workflows/reminder | Trigger a reminder workflow |
+| POST | /api/v1/workflows/subscription/reminder| Trigger a reminder workflow |
 
 ---
 
