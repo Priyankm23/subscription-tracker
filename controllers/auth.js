@@ -27,9 +27,9 @@ export const signUp= async (req,res,next)=>{
         const salt=await bcrypt.genSalt(10);
         const hashedPassword= await bcrypt.hash(password,salt);
 
-        const newUser= await User.create({name,email,password:hashedPassword,role},{session});
+        const newUser= await User.create([{name,email,password:hashedPassword,role}],{session});
 
-        const token = jwt.sign({userId : newUser._id,role: newUser_role},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN})
+        const token = jwt.sign({userId : newUser[0]._id,role: newUser[0]_role},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN})
 
         await session.commitTransaction();
         session.endSession();
@@ -111,9 +111,9 @@ passport.use(new GoogleStrategy({
         const salt=await bcrypt.genSalt(10);
         const hashedPassword=await bcrypt.hash(password,salt);
 
-        const newUser= await User.create({name,email,password:hashedPassword,role},{session});
+        const newUser= await User.create([{name,email,password:hashedPassword,role}],{session});
 
-        const token = jwt.sign({userId : newUser._id},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN});
+        const token = jwt.sign({userId : newUser[0]._id},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN});
         profile.jwt=token;
 
         await session.commitTransaction();
