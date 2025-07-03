@@ -3,121 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>subscription tracker</title>
-    <link rel="stylesheet" href="style.css">
+    <title>login for subscription tracking</title>
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <h1>subscription tracker</h1>
-    <h2>Welcome to your Dashboard</h2>
-    <div id="subs-list">Loading your subscriptions...</div>
-
-    <div class="forms-container">
-        <form id="subForm">
-            <h3 >add a new subscription</h3>
-            <label>subscription name</label>
-            <input type="text" name="name" id="name">
-            <label>price</label>
-            <input type="text" name="price" id="price">
-            <label>currency</label>
-            <select id="currency">
-                <option value="INR" selected>INR</option>
-                <option value="USD">USD</option>
-            </select>
-            <label>frequency</label>
-            <select id="frequency">
-                <option value="daily">daily</option>
-                <option value="weekly">weekly</option>
-                <option value="monthly">monthly</option>
-                <option value="yearly">yearly</option>
-            </select>
-            <label>category</label>
-            <select id="category">
-                <option value="sports">sports</option>
-                <option value="entertainment">entertainment</option>
-                <option value="news">news</option>
-                <option value="finance">finance</option>
-                <option value="lifestyle">lifestyle</option>
-                <option value="education">education</option>
-                <option value="learning">learning</option>
-                <option value="technology">technology</option>
-                <option value="other">other</option>
-            </select>
-            <label>start date</label>
-            <input type="date" name="startDate" id="startDate">
-            <label>payment type</label>
-            <input type="text" name="paymentMethod" id="paymentMethod">
-            <label>status</label>
-            <select id="status">
-                <option value="active">active</option>
-                <option value="expired">expired</option>
-                <option value="cancelled">cancelled</option>
-            </select>
-            <button type="submit">add</button>
-        </form>
-        <form id="editSubs">
-            <h3>edit the subscription</h3>
-              <div>
-                    <label for="edit-name">enter name of subscription to edit</label>
-                    <input type="text" id="edit-name" name="name">
-                </div>
-            <label>enter the selective details to edit</label>
-            <div class="edit-grid">
-                <div>
-                    <label for="edit-price">Price</label>
-                    <input type="text" id="edit-price" name="price">
-                </div>
-                <div>
-                    <label for="edit-currency">Currency</label>
-                    <select id="edit-currency" name="currency">
-                        <option value="INR" selected>INR</option>
-                        <option value="USD">USD</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="edit-frequency">Frequency</label>
-                    <select id="edit-frequency" name="frequency">
-                        <option value="daily">daily</option>
-                        <option value="weekly">weekly</option>
-                        <option value="monthly">monthly</option>
-                        <option value="yearly">yearly</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="edit-category">Category</label>
-                    <select id="edit-category" name="category">
-                        <option value="sports">sports</option>
-                        <option value="entertainment">entertainment</option>
-                        <option value="news">news</option>
-                        <option value="finance">finance</option>
-                        <option value="lifestyle">lifestyle</option>
-                        <option value="education">education</option>
-                        <option value="learning">learning</option>
-                        <option value="technology">technology</option>
-                        <option value="other">other</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="edit-status">Status</label>
-                    <select id="edit-status" name="status">
-                        <option value="active">active</option>
-                        <option value="expired">expired</option>
-                        <option value="cancelled">cancelled</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="edit-startDate">Start Date</label>
-                    <input type="date" name="startDate" id="edit-startDate">
-                </div>
-                <div>
-                    <label for="edit-paymentMethod">Payment</label>
-                    <input type="text" name="paymentMethod" id="edit-paymentMethod">
-                </div>
-            </div>
-            <button type="submit" id="edit">edit</button>
-            <div id="message"></div>
-        </form>
-    </div>
-
-    <script src="script.js"></script>
+    <h1>Welcome to the subscription tracker</h1>
+    <h3>login</h3>
+    <form action="/api/v1/auth/sign-in" method="post">
+       <label>email</label>
+       <input type="text" name="email" placeholder="please enter your email">
+       <br>
+       <br>
+       <label>password</label>
+       <input type="password" name="password" placeholder="password">
+       <br>
+       <br>
+       <button type="submit">sign-in</button>
+    </form>
+    <h3>login with google </h3>
+    <form action="/api/v1/auth/google/login" id="google-login-form">
+        <button type="submit" id="google-login-button" name="google-login">
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google Logo" >
+        </button>
+        <label id="google-text">sign in with google account</label>
+    </form>
+    <h3>sign up</h3>
+    <form id="signup-form">
+        <label>name</label>
+        <input type="text" name="name" placeholder="enter your full name">
+        <br>
+        <br>
+        <lable>email</lable>
+        <input type="text" name="email" placeholder="please enter your email">
+        <br>
+        <br>
+        <label>password</label>
+        <input type="password" name="password" placeholder="enter password">
+        <br>
+        <br>
+        <button type="submit">sign-up</button>
+    </form>
+<script src="login.js"></script>
 </body>
 </html>
