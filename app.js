@@ -11,6 +11,7 @@ import workflowRouter from "./routes/workflow-routes.js"
 import passport from "./controllers/auth.js";
 import { authorize ,restrictTo } from "./middlewares/authMiddleware.js"
 import morgan from "morgan"
+import path from "path"
 
 const app=express()
 
@@ -28,6 +29,18 @@ app.use('/api/v1/workflows',workflowRouter);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+app.use((req, res, next) => {
+  if (
+    !req.cookies.token &&
+    req.path !== '/' &&
+    req.path !== '/login.html' &&
+    !req.path.startsWith('/api/')
+  ) {
+    return res.redirect('/');
+  }
+  next();
 });
 
 app.use(errorMiddleware);
