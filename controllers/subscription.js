@@ -7,41 +7,19 @@ import workflowRouter from "../routes/workflow-routes.js";
 
 export const getUserSubscription=async(req,res,next)=>{
     try {
-        // if(req.user._id.toString()!==req.params.id){
-        //     const error = new Error('you are not the owner of this account')
-        //     res.statusCode=401
-        //     throw error
-        // };
-
-        // const subscription= await Subscription.find({user : req.params.id});
-
-        // if(!req.params.email){
-        //     const error = new Error('email of the user is not provided')
-        //     res.statusCode=401
-        //     throw error
-        // }
-
-        // const user=await User.findOne({email : req.params.email});
-
-        // if (!user) {
-        //     return res.status(404).json({ message: "User not found" });
-        // }
-
-        // const subscriptions=await Subscription.find({ user: user._id });
-
-        // if(!subscriptions){
-        //     const error = new Error('subscription not found')
-        //     res.statusCode=404
-        //     throw error
-        // }
-
         if(!req.user._id){
             const error = new Error("User not authorized to view subscriptions")
-            res.statusCode=404
+            res.statusCode=401
             throw error
         }
 
         const subscriptions = await Subscription.find({user: req.user._id});
+
+        if(!subscriptions){
+            const error = new Error('subscription not found')
+            res.statusCode=404
+            throw error
+        }
  
         res.status(200).send(subscriptions);
 
@@ -93,22 +71,22 @@ export const getSubscriptionById=async(req,res,next)=>{
 
 export const updateSubscription=async(req,res,next)=>{
     try {
-        if(!req.user._id){
+        if(!req.user._id || !req.params.name){
             const error = new Error('user not authorized to edit')
             res.statusCode=401
             throw error
         }
 
-        const subscription=await Subscription.findByIdAndUpdate({
-        user: req.user._id,
-        ...req.body,
-        });
+        const subscription=await Subscription.findOneAndUpdate(
+            {user: req.user._id, name: req.params.name},
+            {...req.body}
+        );
 
         if (!subscription) {
           return res.status(404).json({ update: false, message: "Subscription not found" });
         }
 
-    res.status(200).json({update: true,data: subscription});
+        res.status(200).json({update: true,data: subscription});
     } catch (error) {
         next(error)
     }
@@ -142,11 +120,11 @@ export const createSubscription=async(req,res,next)=>{
 
 export const deleteSubscription=async(req,res,next)=>{
     try {
-        // if(!req.params.id){
-        //     const error = new Error('subscription ID is not provided')
-        //     res.statusCode=401
-        //     throw error
-        // }
+        if(req.user._id){
+            const error = new Error("user is not authorized");
+            res.statusCode=401
+            throw error;
+        }
 
         const subscription=await Subscription.findByIdAndDelete({ user : req.user._id});
 

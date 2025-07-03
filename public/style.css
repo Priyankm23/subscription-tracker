@@ -37,7 +37,7 @@ h2, h3 {
 #subForm {
   background: #ffffffcc;
   padding: 1.2rem 1.5rem;
-  margin: 2rem 0 0 2rem;
+  margin: 2rem 0 0 20rem;
   max-width: 320px;
   min-width: 240px;
   box-shadow: 0 2px 8px rgba(30, 64, 175, 0.10);
@@ -203,7 +203,7 @@ form[action*="google"] button img {
 /* Place add and edit forms side by side on desktop */
 .forms-container {
   display: flex;
-  gap: 2rem;
+  gap: 10rem;
   align-items: flex-start;
 }
 
