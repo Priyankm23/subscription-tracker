@@ -36,7 +36,7 @@ export const signUp= async (req,res,next)=>{
         session.endSession();
 
         res.cookie("token",token,{httpOnly: true, secure: false});
-        res.redirect("/login.html")
+        res.redirect("/dashboard.html")
 
     } catch (error) {
         await session.abortTransaction();
@@ -70,7 +70,7 @@ export const signIn= async (req,res,next)=>{
         const token = jwt.sign({userId : user._id,role: user.role},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN})
 
         res.cookie("token",token,{httpOnly: true, secure: false});
-        res.redirect("/index.html");
+        res.redirect("/dashboard.html");
     } catch (error) {
         next(error);
     }

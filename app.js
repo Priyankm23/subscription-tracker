@@ -20,6 +20,14 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(arcjetMiddleware)
+
+app.get('/dashboard.html', (req, res, next) => {
+  if (!req.cookies.token) {
+    return res.redirect('/');
+  }
+  next();
+});
+
 app.use(express.static("public"));
 
 app.use('/api/v1/auth',authRouter);
@@ -28,19 +36,7 @@ app.use('/api/v1/subscriptions',subscriptionRouter);
 app.use('/api/v1/workflows',workflowRouter);
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-
-app.use((req, res, next) => {
-  if (
-    !req.cookies.token &&
-    req.path !== '/' &&
-    req.path !== '/login.html' &&
-    !req.path.startsWith('/api/')
-  ) {
-    return res.redirect('/');
-  }
-  next();
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.use(errorMiddleware);
@@ -49,7 +45,7 @@ app.get('/auth/google/callback',
     passport.authenticate("google",{session: false, failureRedirect: "/" }),
     (req,res)=>{
         res.cookie("token",req.user.jwt,{httpOnly: true, secure: false});
-        res.redirect("/index.html");
+        res.redirect("/dashboard.html");
     }
 );
 
