@@ -10,26 +10,33 @@ import arcjetMiddleware from "./middlewares/arcjetMiddleware.js"
 import workflowRouter from "./routes/workflow-routes.js"
 import passport from "./controllers/auth.js";
 import { authorize ,restrictTo } from "./middlewares/authMiddleware.js"
+import morgan from "morgan"
 
 const app=express()
 
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+app.use(morgan('dev'));
 app.use(arcjetMiddleware)
+app.use(express.static("public"));
 
 app.use('/api/v1/auth',authRouter);
 app.use('/api/v1/users',authorize,restrictTo(["ADMIN"]),userRouter);
-app.use('/api/v1/subscriptions',authorize,subscriptionRouter);
+app.use('/api/v1/subscriptions',subscriptionRouter);
 app.use('/api/v1/workflows',workflowRouter);
+
+app.get('/api/v1/home',(req,res)=>{
+    res.redirect("/login.html");
+})
 
 app.use(errorMiddleware);
 
 app.get('/auth/google/callback',
     passport.authenticate("google",{session: false, failureRedirect: "/" }),
     (req,res)=>{
-        res.cookie("jwt",req.user.jwt,{httpOnly: true, secure: false});
-        res.status(200).json({success: true, token: req.user.jwt});
+        res.cookie("token",req.user.jwt,{httpOnly: true, secure: false});
+        res.redirect("/index.html");
     }
 );
 

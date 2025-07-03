@@ -8,21 +8,21 @@ import { cancelSubscription,
  getUserSubscription, 
  updateSubscription } 
 from "../controllers/subscription.js";
-import { restrictTo } from "../middlewares/authMiddleware.js";
+import { restrictTo ,authorize} from "../middlewares/authMiddleware.js";
 
 const subscriptionRouter=Router();
 
-subscriptionRouter.get('/',restrictTo(["ADMIN"]),getAllsubscriptions);
+subscriptionRouter.get('/',getAllsubscriptions);
 
 subscriptionRouter.get('/:id',restrictTo(["NORMAL"]),getSubscriptionById);
 
-subscriptionRouter.post('/',restrictTo(["NORMAL"]),createSubscription);
+subscriptionRouter.post('/',authorize,createSubscription);
 
 subscriptionRouter.put('/:id',restrictTo(["NORMAL"]),updateSubscription);
 
 subscriptionRouter.delete('/:id',restrictTo(["NORMAL"]),deleteSubscription);
 
-subscriptionRouter.get('/user/:id',restrictTo(["NORMAL"]),getUserSubscription);
+subscriptionRouter.get('/user/me',authorize,getUserSubscription);
 
 subscriptionRouter.put('/:id/cancel',restrictTo(["NORMAL"]),cancelSubscription);
 

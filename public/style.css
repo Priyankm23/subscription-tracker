@@ -1,0 +1,192 @@
+/* Reset & Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f2f4f8;
+  color: #2d2d2d;
+  padding: 2rem;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Headings */
+h1 {
+  text-align: center;
+  font-size: 2.8rem;
+  color: #264653;
+  margin-bottom: 0.5rem;
+}
+
+h2, h3 {
+  color: #2a9d8f;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Forms */
+form {
+  background: #ffffffcc;
+  padding: 1.2rem 1.5rem;
+  margin: 2rem 0 0 2rem;      /* Top and left margin for left alignment */
+  max-width: 320px;           /* Smaller width */
+  min-width: 240px;
+  box-shadow: 0 2px 8px rgba(30, 64, 175, 0.10);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;                /* Less gap for compactness */
+  font-size: 0.95rem;
+  align-items: flex-start;    /* Align form items to the left */
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+  color: #2563eb;
+  font-size: 1rem;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="password"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #b6cdfa;
+  border-radius: 5px;
+  background-color: #f3f7fd;
+  transition: border-color 0.2s;
+  font-size: 0.97rem;
+  margin-bottom: 0.2rem;
+}
+
+input:focus,
+select:focus {
+  border-color: #2563eb;
+  background-color: #fff;
+  outline: none;
+}
+
+/* Button */
+button[type="submit"] {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.5rem 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.4rem;
+  align-self: flex-end;
+}
+
+button[type="submit"]:hover {
+  background-color: #1e40af;
+}
+
+
+/* Subscriptions List */
+#subs-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem 0;
+}
+
+/* Subscription Card */
+.subscription-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  width: 300px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #2d2d2d;
+}
+
+.subscription-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.subscription-card p {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+.subscription-card p strong {
+  color: #264653;
+  font-weight: 600;
+}
+
+/* Google login section */
+form[action*="google"] button {
+  background-color: #ffffff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  padding: 0.6rem;
+  border-radius: 8px;
+}
+
+form[action*="google"] button img {
+  height: 28px;
+  margin-right: 8px;
+}
+
+/* Optional: Align Google login row */
+#google-login-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+#google-text {
+  margin-left: 10px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  form {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .subscription-card {
+    width: 90%;
+  }
+}
+
+/* Responsive for mobile */
+@media (max-width: 600px) {
+  form {
+    margin: 1rem;
+    max-width: 98vw;
+    padding: 1rem;
+  }
+}
+
+body {
+  background-color: #f2f4f8;
+  background-image: url('maxresdefault.jpg'); /* Replace with actual path */
+  background-size: cover;       /* Cover the entire screen */
+  background-position: center;  /* Center the image */
+  background-repeat: no-repeat; /* Prevent repetition */
+  color: #2d2d2d;
+  padding: 2rem;
+  line-height: 1.6;
+  min-height: 100vh;
+}

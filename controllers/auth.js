@@ -3,6 +3,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import passport from "passport"
 import {Strategy as GoogleStrategy} from "passport-google-oauth20"
+import Subscription from "../models/subscriptionModel.js"
 
 import User from "../models/userModel.js"
 import { JWT_EXPIRES_IN, JWT_SECRET,GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET } from "../config/env.js"
@@ -27,24 +28,16 @@ export const signUp= async (req,res,next)=>{
         const salt=await bcrypt.genSalt(10);
         const hashedPassword= await bcrypt.hash(password,salt);
 
-        const newUser= await User.create({name,email,password:hashedPassword,role},{session});
+        const newUser= await User.create([{name,email,password:hashedPassword,role}],{session});
 
-        const token = jwt.sign({userId : newUser._id,role: newUser_role},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN})
+        const token = jwt.sign({userId : newUser[0]._id,role: newUser[0].role},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN})
 
         await session.commitTransaction();
         session.endSession();
 
-        res.cookie("jwt",token,{httpOnly: true, secure: false});
-        res.status(201).json({
-            success:true,
-            message:'User created successfully',
-            data:{
-                token,
-                user:newUser,
-            }
-        });
+        res.cookie("token",token,{httpOnly: true, secure: false});
+        res.redirect("/login.html")
 
-        
     } catch (error) {
         await session.abortTransaction();
         session.endSession();
@@ -64,25 +57,20 @@ export const signIn= async (req,res,next)=>{
             error.statusCode=404
             throw error
         }
-
+        
         const isPasswordValid=await bcrypt.compare(password,user.password)
-
+        
         if(!isPasswordValid){
             const error=new Error("Invalid password")
             error.statusCode=401
             throw error
         }
+        // const subscriptions = await Subscription.find({user: user._id});
 
         const token = jwt.sign({userId : user._id,role: user.role},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN})
 
-        res.status(200).json({
-            success:true,
-            message:'User signed in successfully',
-            data:{
-                token,
-                user
-            }
-        });
+        res.cookie("token",token,{httpOnly: true, secure: false});
+        res.redirect("/index.html");
     } catch (error) {
         next(error);
     }
@@ -111,9 +99,9 @@ passport.use(new GoogleStrategy({
         const salt=await bcrypt.genSalt(10);
         const hashedPassword=await bcrypt.hash(password,salt);
 
-        const newUser= await User.create({name,email,password:hashedPassword,role},{session});
+        const newUser= await User.create([{name,email,password:hashedPassword,role}],{session});
 
-        const token = jwt.sign({userId : newUser._id},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN});
+        const token = jwt.sign({userId : newUser[0]._id},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN});
         profile.jwt=token;
 
         await session.commitTransaction();

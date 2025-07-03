@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>subscription tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>subscription tracker</h1>
+    <h2>Welcome to your Dashboard</h2>
+    <div id="subs-list">Loading your subscriptions...</div>
+
+    <h2 >add a new subscription</h2>
+    <form id="subForm">
+        <label>subscription name</label>
+        <input type="text" name="name" id="name">
+        <label>price</label>
+        <input type="text" name="price" id="price">
+        <label>currency</label>
+        <select id="currency">
+            <option value="INR" selected>INR</option>
+            <option value="USD">USD</option>
+        </select>
+        <label>frequency</label>
+        <select id="frequency">
+            <option value="daily">daily</option>
+            <option value="weekly">weekly</option>
+            <option value="monthly">monthlfinancey</option>
+            <option value="yearly">yearly</option>
+        </select>
+        <label>category</label>
+        <select id="category">
+            <option value="sports">sports</option>
+            <option value="entertainment">entertainment</option>
+            <option value="news">news</option>
+            <option value="finance">finance</option>
+            <option value="lifestyle">lifestyle</option>
+            <option value="education">education</option>
+            <option value="learning">learning</option>
+            <option value="technology">technology</option>
+            <option value="other">other</option>
+        </select>
+        <label>start date</label>
+        <input type="date" name="startDate" id="startDate">
+        <label>payment type</label>
+        <input type="text" name="paymentMethod" id="paymentMethod">
+        <label>status</label>
+        <select id="status">
+            <option value="active">active</option>
+            <option value="expired">expired</option>
+            <option value="cancelled">cancelled</option>
+        </select>
+        <button type="submit">add</button>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>

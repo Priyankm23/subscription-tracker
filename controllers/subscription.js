@@ -1,20 +1,45 @@
 import { workflowClient } from "../config/upstash.js";
 import Subscription from "../models/subscriptionModel.js"
+import User from "../models/userModel.js";
 import {SERVER_URL} from "../config/env.js"
 import dayjs from "dayjs";
 import workflowRouter from "../routes/workflow-routes.js";
 
 export const getUserSubscription=async(req,res,next)=>{
     try {
-        if(req.user._id.toString()!==req.params.id){
-            const error = new Error('you are not the owner of this account')
-            res.statusCode=401
-            throw error
-        };
+        // if(req.user._id.toString()!==req.params.id){
+        //     const error = new Error('you are not the owner of this account')
+        //     res.statusCode=401
+        //     throw error
+        // };
 
-        const subscription= await Subscription.find({user : req.params.id});
+        // const subscription= await Subscription.find({user : req.params.id});
 
-        res.status(200).json({success: true, data: subscription});
+        // if(!req.params.email){
+        //     const error = new Error('email of the user is not provided')
+        //     res.statusCode=401
+        //     throw error
+        // }
+
+        // const user=await User.findOne({email : req.params.email});
+
+        // if (!user) {
+        //     return res.status(404).json({ message: "User not found" });
+        // }
+
+        // const subscriptions=await Subscription.find({ user: user._id });
+
+        // if(!subscriptions){
+        //     const error = new Error('subscription not found')
+        //     res.statusCode=404
+        //     throw error
+        // }
+
+        const subscriptions = await Subscription.find({user: req.user._id});
+ 
+        res.status(200).send(subscriptions);
+
+        // res.status(200).json({success: true, data: subscription});
     } catch (error) {
         next(error)
     };
@@ -24,7 +49,7 @@ export const getAllsubscriptions=async(req,res,next)=>{
     try {
         const subscriptions=await Subscription.find({});
 
-        res.status(200).json({success: true,data : subscriptions});
+        res.status(200).send(subscriptions);
     } catch (error) {
         next(error)
         
@@ -33,13 +58,19 @@ export const getAllsubscriptions=async(req,res,next)=>{
 
 export const getSubscriptionById=async(req,res,next)=>{
     try {
-        if(!req.params.id){
-            const error = new Error('subscription ID is not provided')
+        if(!req.params.name){
+            const error = new Error('name of the user is not provided')
             res.statusCode=401
             throw error
         }
 
-        const subscription=await Subscription.findById(req.params.id);
+        const user=await User.findOne({name : req.params.name});
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const subscription=await Subscription.findById(user._id);
 
         if(!subscription){
             const error = new Error('subscription not found')
@@ -47,7 +78,7 @@ export const getSubscriptionById=async(req,res,next)=>{
             throw error
         }
  
-        res.status(200).json({success:true, data: subscription});
+        res.status(200).send(subscription);
 
     } catch (error) {
         next(error)
