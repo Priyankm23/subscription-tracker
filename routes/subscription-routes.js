@@ -18,9 +18,9 @@ subscriptionRouter.get('/:id',restrictTo(["NORMAL"]),getSubscriptionById);
 
 subscriptionRouter.post('/',authorize,createSubscription);
 
-subscriptionRouter.put('/:id',restrictTo(["NORMAL"]),updateSubscription);
+subscriptionRouter.put('/edit',authorize,updateSubscription);
 
-subscriptionRouter.delete('/:id',restrictTo(["NORMAL"]),deleteSubscription);
+subscriptionRouter.delete('/delete',authorize,deleteSubscription);
 
 subscriptionRouter.get('/user/me',authorize,getUserSubscription);
 

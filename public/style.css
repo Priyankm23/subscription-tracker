@@ -8,6 +8,10 @@
 
 body {
   background-color: #f2f4f8;
+  background-image: url('maxresdefault.jpg'); /* Replace with actual path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: #2d2d2d;
   padding: 2rem;
   line-height: 1.6;
@@ -30,19 +34,18 @@ h2, h3 {
 }
 
 /* Forms */
-form {
+#subForm {
   background: #ffffffcc;
   padding: 1.2rem 1.5rem;
-  margin: 2rem 0 0 2rem;      /* Top and left margin for left alignment */
-  max-width: 320px;           /* Smaller width */
+  margin: 2rem 0 0 2rem;
+  max-width: 320px;
   min-width: 240px;
   box-shadow: 0 2px 8px rgba(30, 64, 175, 0.10);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;                /* Less gap for compactness */
+  gap: 0.7rem;
   font-size: 0.95rem;
-  align-items: flex-start;    /* Align form items to the left */
 }
 
 label {
@@ -74,7 +77,7 @@ select:focus {
   outline: none;
 }
 
-/* Button */
+/* Button (for form submission) */
 button[type="submit"] {
   background-color: #2563eb;
   color: white;
@@ -91,7 +94,6 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #1e40af;
 }
-
 
 /* Subscriptions List */
 #subs-list {
@@ -111,6 +113,9 @@ button[type="submit"]:hover {
   box-shadow: 0 3px 10px rgba(0,0,0,0.05);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   color: #2d2d2d;
+  display: flex; /* Added for button positioning */
+  flex-direction: column; /* Added for button positioning */
+  justify-content: space-between; /* Pushes buttons to the bottom */
 }
 
 .subscription-card:hover {
@@ -127,6 +132,43 @@ button[type="submit"]:hover {
   color: #264653;
   font-weight: 600;
 }
+
+/* Action Buttons Container */
+.subscription-card-actions {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 0.5rem; /* Space between buttons */
+  margin-top: 1rem; /* Space from the content above */
+}
+
+/* Edit and Delete Button Styles */
+.subscription-card-actions button {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.subscription-card-actions .edit-btn {
+  background-color: #28a745; /* Green for edit */
+  color: white;
+}
+
+.subscription-card-actions .edit-btn:hover {
+  background-color: #218838;
+}
+
+.subscription-card-actions .delete-btn {
+  background-color: #dc3545; /* Red for delete */
+  color: white;
+}
+
+.subscription-card-actions .delete-btn:hover {
+  background-color: #c82333;
+}
+
 
 /* Google login section */
 form[action*="google"] button {
@@ -158,6 +200,66 @@ form[action*="google"] button img {
   color: #333;
 }
 
+/* Place add and edit forms side by side on desktop */
+.forms-container {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* Compact grid for edit form */
+#editSubs {
+  background: #ffffffcc;
+  padding: 1.2rem 1.5rem;
+  margin: 2rem 0 0 2rem;
+  max-width: 420px;
+  min-width: 240px;
+  box-shadow: 0 2px 8px rgba(30, 64, 175, 0.10);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  font-size: 0.95rem;
+}
+
+.edit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem 1rem;
+}
+
+#editSubs label {
+  font-size: 0.95rem;
+  color: #2563eb;
+  margin-bottom: 0.1rem;
+}
+
+#editSubs input,
+#editSubs select {
+  width: 100%;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #b6cdfa;
+  border-radius: 5px;
+  background-color: #f3f7fd;
+  font-size: 0.95rem;
+}
+
+#editSubs button[type="submit"] {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.5rem 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 0.7rem;
+  align-self: flex-end;
+}
+
+#editSubs button[type="submit"]:hover {
+  background-color: #1e40af;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   form {
@@ -179,14 +281,13 @@ form[action*="google"] button img {
   }
 }
 
-body {
-  background-color: #f2f4f8;
-  background-image: url('maxresdefault.jpg'); /* Replace with actual path */
-  background-size: cover;       /* Cover the entire screen */
-  background-position: center;  /* Center the image */
-  background-repeat: no-repeat; /* Prevent repetition */
-  color: #2d2d2d;
-  padding: 2rem;
-  line-height: 1.6;
-  min-height: 100vh;
+/* Responsive: stack forms on mobile */
+@media (max-width: 900px) {
+  .forms-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .edit-grid {
+    grid-template-columns: 1fr;
+  }
 }

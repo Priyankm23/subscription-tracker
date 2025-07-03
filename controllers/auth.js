@@ -30,7 +30,11 @@ export const signUp= async (req,res,next)=>{
 
         const newUser= await User.create([{name,email,password:hashedPassword,role}],{session});
 
+<<<<<<< HEAD
         const token = jwt.sign({userId : newUser[0]._id,role: newUser[0].role},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN})
+=======
+        const token = jwt.sign({userId : newUser[0]._id,role: newUser[0]_role},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN})
+>>>>>>> e9922ecb39c1d05180b8c2ddebb95f027e40a486
 
         await session.commitTransaction();
         session.endSession();

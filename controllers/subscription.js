@@ -35,6 +35,12 @@ export const getUserSubscription=async(req,res,next)=>{
         //     throw error
         // }
 
+        if(!req.user._id){
+            const error = new Error("User not authorized to view subscriptions")
+            res.statusCode=404
+            throw error
+        }
+
         const subscriptions = await Subscription.find({user: req.user._id});
  
         res.status(200).send(subscriptions);
@@ -87,16 +93,16 @@ export const getSubscriptionById=async(req,res,next)=>{
 
 export const updateSubscription=async(req,res,next)=>{
     try {
-        if(!req.params.id){
-            const error = new Error('subscription ID is not provided')
+        if(!req.user._id){
+            const error = new Error('user not authorized to edit')
             res.statusCode=401
             throw error
         }
 
-        const subscription=await Subscription.findByIdAndUpdate(
-        req.params.id,
-        {...req.body},
-        );
+        const subscription=await Subscription.findByIdAndUpdate({
+        user: req.user._id,
+        ...req.body,
+        });
 
         if (!subscription) {
           return res.status(404).json({ update: false, message: "Subscription not found" });
@@ -136,13 +142,13 @@ export const createSubscription=async(req,res,next)=>{
 
 export const deleteSubscription=async(req,res,next)=>{
     try {
-        if(!req.params.id){
-            const error = new Error('subscription ID is not provided')
-            res.statusCode=401
-            throw error
-        }
+        // if(!req.params.id){
+        //     const error = new Error('subscription ID is not provided')
+        //     res.statusCode=401
+        //     throw error
+        // }
 
-        const subscription=await Subscription.findByIdAndDelete(req.params.id);
+        const subscription=await Subscription.findByIdAndDelete({ user : req.user._id});
 
         if(!subscription){
             return res.status(404).json({delete: false,message:"subscription not found to delete"});

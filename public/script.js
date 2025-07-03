@@ -56,11 +56,34 @@ window.onload = async () => {
     }
   });
 
-  const editBtn = document.getElementById("edit");
-
-  editBtn.addEventListener("submit",async(e)=>{
+ const editForm = document.getElementById("editSubs");
+ 
+  editForm.addEventListener("submit",async(e)=>{
     e.preventDefault();
 
-    document.createElement("")
+    const name = document.getElementById("edit-name").value.trim();
+    const price = document.getElementById("edit-price").value.trim();
+    const currency = document.getElementById("edit-currency").value;
+    const frequency = document.getElementById("edit-frequency").value;
+    const category = document.getElementById("edit-category").value;
+    const paymentMethod = document.getElementById("edit-paymentMethod").value.trim();
+    const status = document.getElementById("edit-status").value;
+    const startDate =document.getElementById("edit-startDate").value;
+
+    const res = await fetch("/api/v1/subscriptions/edit", {
+      credentials: "include",
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, price ,currency, frequency, startDate, paymentMethod, category, status }),
+    });
+
+    if (res.ok) {
+      window.location.href = "/index.html";
+      window.alert("email will be sent before 1 week of expiration of subscription");
+    } else {
+      const data = await res.json();
+      alert(data.message || "failed to add the subscription");
+    }
+    
   })
 
