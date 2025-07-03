@@ -26,9 +26,9 @@ app.use('/api/v1/users',authorize,restrictTo(["ADMIN"]),userRouter);
 app.use('/api/v1/subscriptions',subscriptionRouter);
 app.use('/api/v1/workflows',workflowRouter);
 
-app.get('/api/v1/home',(req,res)=>{
-    res.redirect("/login.html");
-})
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
 
 app.use(errorMiddleware);
 
