@@ -48,7 +48,7 @@ window.onload = async () => {
     });
 
     if (res.ok) {
-      window.location.href = "/index.html";
+      window.location.href = "/dashboard.html";
       window.alert("email will be sent before 1 week of expiration of subscription");
     } else {
       const data = await res.json();
@@ -84,7 +84,7 @@ window.onload = async () => {
     if (res.ok) {
       const message=document.getElementById("message")
       message.innerHTML=`your subscription for ${name} is updated`;
-      window.location.href = "/index.html";
+      window.location.href = "/dashboard.html";
     } else {
       const data = await res.json();
       alert(data.message || "failed to add the subscription");

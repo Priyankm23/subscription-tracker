@@ -44,7 +44,7 @@ app.use(errorMiddleware);
 app.get('/auth/google/callback',
     passport.authenticate("google",{session: false, failureRedirect: "/" }),
     (req,res)=>{
-        res.cookie("token",req.user.jwt,{httpOnly: true, secure: false});
+        res.cookie("token",req.user.jwt,{httpOnly: true, secure: false,path: "/"});
         res.redirect("/dashboard.html");
     }
 );
