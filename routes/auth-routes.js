@@ -8,9 +8,9 @@ import {
 const authRouter=Router();
 
 // api/v1/auth/sign-up
-authRouter.post('/sign-up',signUp)
+authRouter.post('/signup',signUp);
 
-authRouter.post('/sign-in',signIn)
+authRouter.post('/signin',signIn);
 
 authRouter.get('/google/login',
     passport.authenticate("google",{scope:["profile","email"]})

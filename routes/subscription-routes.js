@@ -12,9 +12,13 @@ import { restrictTo ,authorize} from "../middlewares/authMiddleware.js";
 
 const subscriptionRouter=Router();
 
-subscriptionRouter.get('/',getAllsubscriptions);
+subscriptionRouter.get('/all',authorize,restrictTo(["admin"]),getAllsubscriptions);
 
-subscriptionRouter.get('/:id',restrictTo(["NORMAL"]),getSubscriptionById);
+subscriptionRouter.get('/upcoming',restrictTo(["admin"]),getUpcomingRenewals);
+
+subscriptionRouter.get('/',authorize,getUserSubscription);
+
+subscriptionRouter.get('/:id',restrictTo(["user"]),getSubscriptionById);
 
 subscriptionRouter.post('/',authorize,createSubscription);
 
@@ -22,11 +26,7 @@ subscriptionRouter.put('/edit/:name',authorize,updateSubscription);
 
 subscriptionRouter.delete('/delete',authorize,deleteSubscription);
 
-subscriptionRouter.get('/user/me',authorize,getUserSubscription);
-
-subscriptionRouter.put('/:id/cancel',restrictTo(["NORMAL"]),cancelSubscription);
-
-subscriptionRouter.get('/upcoming/renewals',restrictTo(["ADMIN"]),getUpcomingRenewals);
+subscriptionRouter.put('/:id/cancel',restrictTo(["user"]),cancelSubscription);
 
 
 export default subscriptionRouter

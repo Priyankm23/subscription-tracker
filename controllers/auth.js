@@ -36,7 +36,7 @@ export const signUp= async (req,res,next)=>{
         session.endSession();
 
         res.cookie("token",token,{httpOnly: true, secure: false});
-        res.redirect("/dashboard.html")
+        res.status(201).json({success: true, data: newUser[0]});
 
     } catch (error) {
         await session.abortTransaction();
@@ -70,7 +70,7 @@ export const signIn= async (req,res,next)=>{
         const token = jwt.sign({userId : user._id,role: user.role},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN})
 
         res.cookie("token",token,{httpOnly: true, secure: false});
-        res.redirect("/dashboard.html");
+        res.status(200).json({success: true, data: user});
     } catch (error) {
         next(error);
     }
@@ -87,7 +87,7 @@ passport.use(new GoogleStrategy({
         const existingUser= await User.findOne({email: profile.emails[0].value});
 
         if(existingUser){
-            const token = jwt.sign({ userId: existingUser._id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+            const token = jwt.sign({ userId: existingUser._id, role: existingUser.role }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
             profile.jwt = token;
             done(null, profile);
             return;
@@ -95,13 +95,14 @@ passport.use(new GoogleStrategy({
         const name=profile.displayName;
         const email=profile.emails[0].value;
         const password=profile.id;
+        const role='user';
 
         const salt=await bcrypt.genSalt(10);
         const hashedPassword=await bcrypt.hash(password,salt);
 
         const newUser= await User.create([{name,email,password:hashedPassword,role}],{session});
 
-        const token = jwt.sign({userId : newUser[0]._id},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN});
+        const token = jwt.sign({userId: newUser[0]._id, role: newUser[0].role}, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN});
         profile.jwt=token;
 
         await session.commitTransaction();
