@@ -6,11 +6,6 @@ import { JWT_SECRET } from "../config/env.js";
 export const authorize=async(req,res,next)=>{
     try {
 
-        // let token;
-        // if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-        //     token=req.headers.authorization.split(' ')[1];
-        // }
-
         const token=req.cookies.token;
         
         if(!token) {
@@ -35,7 +30,7 @@ export const authorize=async(req,res,next)=>{
         next();
 
     } catch (error) {
-        res.status(401).redirect("/login.html");
+        res.status(401).redirect("/auth.html");
     }
 
 };

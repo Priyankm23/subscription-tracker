@@ -12,6 +12,11 @@ import passport from "./controllers/auth.js";
 import { authorize ,restrictTo } from "./middlewares/authMiddleware.js"
 import morgan from "morgan"
 import path from "path"
+import { fileURLToPath } from 'url';
+
+// Fix for __dirname in ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app=express()
 
@@ -27,6 +32,23 @@ app.use('/api/v1/subscriptions',subscriptionRouter);
 app.use('/api/v1/workflows',workflowRouter);
 
 app.use(errorMiddleware);
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get("/", (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.redirect("/auth.html");
+  }
+  return res.redirect("/dashboard"); // This route is protected and will serve index.html
+}); 
+
+app.get('/dashboard', (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.redirect("/auth.html");
+  }
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 app.get('/auth/google/callback',
     passport.authenticate("google",{session: false, failureRedirect: "/" }),

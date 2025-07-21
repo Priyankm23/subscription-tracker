@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Subscription</title>
+  <link rel="stylesheet" href="subs.css" />
+</head>
+<body>
+  <div class="form-container">
+    <h2>Add Subscription</h2>
+    <form id="subscriptionForm">
+      <input type="text" id="name" placeholder="Name" required />
+      
+      <input type="number" id="price" placeholder="Price" min="0" required />
+      
+      <select id="currency" required>
+        <option value="INR">INR</option>
+        <option value="USD">USD</option>
+      </select>
+      
+      <select id="frequency" required>
+        <option value="">Select Frequency</option>
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+      </select>
+      
+      <select id="category" required>
+        <option value="">Select Category</option>
+        <option value="sports">Sports</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="news">News</option>
+        <option value="lifestyle">Lifestyle</option>
+        <option value="technology">Technology</option>
+        <option value="finance">Finance</option>
+        <option value="learning">Learning</option>
+        <option value="education">Education</option>
+        <option value="other">Other</option>
+      </select>
+      
+      <input type="text" id="paymentMethod" placeholder="Payment Method (e.g., UPI, Card)" required />
+
+      <select id="status">
+        <option value="active">Active</option>
+        <option value="cancelled">Cancelled</option>
+        <option value="expired">Expired</option>
+      </select>
+
+      <label>Start Date</label>
+      <input type="date" id="startDate" required />
+
+      <button type="submit">Add Subscription</button>
+    </form>
+    <div id="message"></div>
+  </div>
+
+  <script src="subs.js"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth | Login & Signup</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Share Tech Mono', monospace;
+        background-color: #f4d35e;
+        margin: 0;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      h1 {
+        margin-bottom: 1rem;
+      }
+
+      #hero-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        background-color: #fcf5c7;
+        border-radius: 12px;
+        padding: 2rem;
+        width: 100%;
+        max-width: 1300px;
+        box-sizing: border-box;
+        margin-bottom: 3rem;
+      }
+
+      #hero-text {
+        flex: 1;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        text-align: left;
+      }
+
+      #hero-image {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        height: 300px;
+        width: 400px;
+      }
+
+      #hero-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      .auth-container {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+
+      .form-box {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 360px;
+      }
+
+      .form-box h2 {
+        text-align: center;
+        color: #4f46e5;
+        margin-bottom: 1rem;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      input {
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fcf5c7;
+      }
+
+      button {
+        padding: 0.75rem;
+        background-color: #ee964b;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      button:hover {
+        background-color: #4338ca;
+      }
+
+      .google-auth {
+        text-align: center;
+      }
+
+      #googleLogin {
+        background: #db4437;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 0.5rem;
+      }
+
+      #googleLogin:hover {
+        background: #c23321;
+      }
+
+      @media (max-width: 768px) {
+        #hero-section {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        #hero-text {
+          text-align: center;
+        }
+
+        .form-box {
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+  <h1>welcome to subscription tracker</h1>
+
+    <div id="hero-section">
+      <div id="hero-text">
+        <h2 style="text-align: center;">All Your Subscriptions in One Place</h2>
+        <p>
+          Manage, monitor, and optimize all your subscriptions from a single
+          dashboard. Stay ahead with detailed analytics, reminders, and budget
+          tracking to avoid surprise renewals or missed cancellations.
+        </p>
+      </div>
+      <div id="hero-image">
+        <img src="image.png" alt="Hero Illustration" />
+      </div>
+    </div>
+
+    <div class="auth-container">
+      <div class="form-box login">
+        <h2>Login</h2>
+        <form id="loginForm">
+          <input type="email" name="email" placeholder="Email" required />
+          <input type="password" name="password" placeholder="Password" required />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+
+      <div class="form-box signup">
+        <h2>Sign Up</h2>
+        <form id="signupForm">
+          <input type="text" name="name" placeholder="Full Name" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <input type="password" name="password" placeholder="Password" required />
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="google-auth">
+      <p>or</p>
+      <button id="googleLogin">Login with Google</button>
+    </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const form = e.target;
+          const res = await fetch("/api/v1/auth/signin", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: form.email.value,
+              password: form.password.value,
+            }),
+          });
+          const data = await res.json();
+          if (res.ok) location.href = "/dashboard";
+          else alert(data.message || "Login failed");
+        });
+
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const form = e.target;
+          const res = await fetch("/api/v1/auth/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: form.name.value,
+              email: form.email.value,
+              password: form.password.value,
+            }),
+          });
+          const data = await res.json();
+          if (res.ok) alert("Signup successful! Please login.");
+          else alert(data.message || "Signup failed");
+        });
+
+      document.getElementById("googleLogin").addEventListener("click", () => {
+        window.location.href = "/api/v1/auth/google";
+      });
+    </script>
+  </body>
+</html>

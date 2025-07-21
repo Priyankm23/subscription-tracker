@@ -69,8 +69,8 @@ export const signIn= async (req,res,next)=>{
 
         const token = jwt.sign({userId : user._id,role: user.role},JWT_SECRET,{expiresIn : JWT_EXPIRES_IN})
 
-        res.cookie("token",token,{httpOnly: true, secure: false});
-        res.status(200).json({success: true, data: user});
+        res.cookie("token",token,{httpOnly: true, secure: true});
+        res.status(200).json({success: true, message: "Login successful",datja: user});
     } catch (error) {
         next(error);
     }
