@@ -1,9 +1,9 @@
 /* General body background based on the palette */
 body {
-  background: #FFFFFF; /* Background color from the palette */
+  background: #ffffff; /* Background color from the palette */
   padding: 2rem;
   color: #000000; /* Foreground color from the palette */
-  font-family: 'Share Tech Mono', monospace;
+  font-family: "Share Tech Mono", monospace;
 }
 .dashboard {
   display: grid;
@@ -13,7 +13,7 @@ body {
 /* Navbar styles (keeping as is from previous iteration) */
 .navbar {
   background-color: #000000;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 1rem 2rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
@@ -31,7 +31,7 @@ body {
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .navbar-menu {
@@ -41,7 +41,7 @@ body {
 }
 
 .navbar-menu li a {
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;
@@ -51,14 +51,14 @@ body {
   color: #c7d2fe;
 }
 
-
 /* Unified Card Styling */
 /* Apply this consistent style to all elements that should look like the provided card image */
 .card,
 .chart-container,
 .list, /* The container for the subscription list */
-.subscription-list-grid > div { /* Individual subscription items */
-  background: #FFFFFF; /* Card Background from palette */
+.subscription-list-grid > div {
+  /* Individual subscription items */
+  background: #fcf5c7; /* Card Background from palette */
   border-radius: 10px; /* Rounded corners as per example */
   padding: 1.5rem;
   /* The exact box-shadow from image_0567b7.png and image_04f776.png */
@@ -81,10 +81,27 @@ body {
 }
 
 .card p {
-    color: #333333; /* Muted color for paragraph text */
-    font-size: 1.8rem;
-    font-weight: 600;
+  color: #333333; /* Muted color for paragraph text */
+  font-size: 1.8rem;
+  font-weight: 600;
 }
+
+#div1{
+  background-color: #e0ffe0;
+}
+
+#div2{
+  background-color: #e0e0ff;
+}
+
+#div3{
+  background-color: #ffe0e0;
+}
+
+#div4{
+  background-color: #f8c889ff;
+}
+
 
 /* Charts Section */
 .charts-section {
@@ -112,11 +129,11 @@ body {
 }
 
 .curChart {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .curChart p {
@@ -152,12 +169,13 @@ body {
 
 /* Individual subscription item styling - applies the unified style */
 .subscription-list-grid > div {
-    padding: 1rem;
-    font-size: 0.9rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Distribute content vertically */
-    /* Box-shadow and border applied from the unified style above */
+  padding: 1rem;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute content vertically */
+  /* Box-shadow and border applied from the unified style above */
+  background-color: #ffffff;
 }
 
 /* Formatting inside each subscription card */
@@ -165,6 +183,7 @@ body {
   margin: 0.2rem 0; /* Smaller margin for less clutter */
   color: #333333; /* Muted color for details */
   line-height: 1.3; /* Improve readability */
+  font-size: medium;
 }
 
 .subscription-list-grid > div strong {
@@ -192,16 +211,19 @@ body {
 .edit-btn {
   background-color: #0066ff; /* Accent color from palette */
   color: #ffffff; /* Accent Foreground */
+  font-family: "Share Tech Mono", monospace;
 }
 
 .delete-btn {
   background-color: #ff3333; /* Primary color for destructive action */
   color: #ffffff; /* Primary Foreground */
+  font-family: "Share Tech Mono", monospace;
 }
 
 .cancel-btn {
   background-color: #ffff00; /* Secondary color for cancel/warning */
   color: #000000; /* Secondary Foreground */
+  font-family: "Share Tech Mono", monospace;
 }
 
 .button-group button:hover {
@@ -270,12 +292,12 @@ body {
 .modal-form select {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #CCCCCC; /* Light border for inputs */
+  border: 1px solid #cccccc; /* Light border for inputs */
   border-radius: 6px;
   font-size: 0.9rem;
   color: #000000; /* Text color for input */
-  background-color: #F8F8F8; /* Slightly off-white background for inputs */
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Subtle inner shadow */
+  background-color: #f8f8f8; /* Slightly off-white background for inputs */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle inner shadow */
 }
 
 .modal-form input[type="text"]:focus,
@@ -288,7 +310,7 @@ body {
 }
 
 .modal-form input[readonly] {
-  background-color: #E0E0E0; /* Dim background for readonly fields */
+  background-color: #e0e0e0; /* Dim background for readonly fields */
   cursor: not-allowed;
 }
 
@@ -302,7 +324,10 @@ body {
 /* Responsive adjustments for smaller screens if needed (optional, but good practice) */
 @media (max-width: 900px) {
   .subscription-list-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* 2 cards per row on medium screens */
   }
 }
 
@@ -318,7 +343,7 @@ body {
     gap: 0.5rem;
   }
   .modal-content {
-      padding: 1rem;
+    padding: 1rem;
   }
 }
 
@@ -331,4 +356,3 @@ body {
     text-align: center; /* Better alignment on narrow screens */
   }
 }
-

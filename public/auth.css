@@ -1,4 +1,7 @@
 /* AUTH FORM SPECIFIC STYLES - auth.css */
+body{
+  background-color: #fcf5c7;
+}
 
 .auth-wrapper {
   display: flex;
@@ -7,7 +10,7 @@
   justify-content: center; /* Center vertically in auth.html */
   min-height: 100vh; /* Take full viewport height for centering */
   padding: 2rem; /* Add padding for small screens */
-  background-color: #FFFFFF; /* Ensure body background is consistent */
+  background-color: #fcf5c7; /* Ensure body background is consistent */
   color: #000000; /* Default text color */
 }
 
@@ -19,9 +22,8 @@
   padding: 2rem;
   box-sizing: border-box; /* Include padding in width */
   text-align: center; /* Center headings/buttons within the form */
-
   /* Added these styles to explicitly ensure the border and shadow as per theme */
-  background: #FFFFFF; /* Card Background from theme*/
+  background: #ffffff; /* Card Background from theme*/
   border-radius: 10px; /* Border radius from theme*/
   box-shadow: 4px 4px 0px rgba(0, 0, 0, 1); /* Black stroke/shadow from theme*/
   border: 1px solid #000000; /* Thin black border from theme*/

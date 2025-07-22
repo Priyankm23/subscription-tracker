@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Insights</title>
+    <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="info.css"> <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">📊Subscription tracker</div>
+        <ul class="navbar-menu">
+          <li><a href="subscription.html">Add subscription</a></li>
+          <li><a href="info.html">Insights</a></li> <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="dashboard-info">
+        <h1>Detailed Subscription Insights</h1>
+        <p class="section-description">
+            This page provides a comprehensive breakdown of your subscriptions, helping you understand spending patterns,
+            monitor statuses, and anticipate upcoming renewals.
+        </p>
+
+        <div class="info-section">
+            <h2>Subscriptions by Category</h2>
+            <p class="section-description">
+                This section shows the number of subscriptions you have in each defined category. Understanding your category distribution
+                can highlight where most of your recurring expenses are concentrated.
+            </p>
+            <div id="category-breakdown" class="info-grid">
+                </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Subscription Status Overview</h2>
+            <p class="section-description">
+                Get a quick glance at the current state of your subscriptions: how many are active, how many have expired,
+                and how many you've chosen to cancel. This helps in managing your live subscriptions and reviewing past ones.
+            </p>
+            <div id="status-overview" class="info-grid">
+                <div class="info-card">
+                    <h3>Active Subscriptions</h3>
+                    <p id="active-subs">0</p>
+                </div>
+                <div class="info-card">
+                    <h3>Expired Subscriptions</h3>
+                    <p id="expired-subs">0</p>
+                </div>
+                <div class="info-card">
+                    <h3>Cancelled Subscriptions</h3>
+                    <p id="cancelled-subs">0</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Subscriptions by Payment Method</h2>
+            <p class="section-description">
+                This breakdown illustrates how your subscriptions are paid, categorized into common methods like Card, UPI,
+                or Other. This can assist in tracking expenses based on your payment instruments.
+            </p>
+            <div id="payment-method-breakdown" class="info-grid">
+                </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Top 5 Upcoming Renewals</h2>
+            <p class="section-description">
+                Stay on top of your finances with a list of your top 5 active subscriptions whose renewal dates are approaching soon.
+                This helps you decide whether to continue, cancel, or adjust them before they auto-renew.
+            </p>
+            <div id="upcoming-renewals" class="info-list">
+                <p id="no-upcoming-renewals" style="display: none; text-align: center; color: #555;">No upcoming renewals in the next 90 days.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="info.js"></script> </body>
+</html>

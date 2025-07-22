@@ -116,52 +116,61 @@ export const createSubscription=async(req,res,next)=>{
     }
 };
 
-export const deleteSubscription=async(req,res,next)=>{
+
+export const deleteSubscription = async (req, res, next) => {
     try {
-        if(!req.user._id){
-            const error = new Error("user is not authorized");
-            res.statusCode=401
+        if (!req.user || !req.user._id) { // Ensure req.user and _id are present for authorization
+            const error = new Error("User is not authorized.");
+            res.statusCode = 401;
             throw error;
         }
 
-        const subscription=await Subscription.findByIdAndDelete({ user : req.user._id});
+        const { name } = req.params; // Get the subscription name from URL parameters
 
-        if(!subscription){
-            return res.status(404).json({delete: false,message:"subscription not found to delete"});
+        const subscription = await Subscription.findOneAndDelete({
+            name: name,
+            user: req.user._id // Crucial for multi-tenancy: ensuring only the user's own subscription is deleted
+        });
+
+        if (!subscription) {
+            return res.status(404).json({ delete: false, message: "Subscription not found or you don't have permission to delete it." });
         }
 
-        res.status(200).json({delete:true, message: `${subscription.name}-${subscription.id} id deleted `});
+        res.status(200).json({ delete: true, message: `${subscription.name} subscription deleted successfully.` });
     } catch (error) {
-        next(error);
+        console.error("Error deleting subscription:", error); // Log the error for debugging
+        next(error); // Pass error to the next middleware (error handler)
     }
-    
 };
 
-export const cancelSubscription=async(req,res,next)=>{
+export const cancelSubscription = async (req, res, next) => {
     try {
-        if(!req.params.id){
-            const error = new Error('subscription ID is not provided')
-            res.statusCode=401
-            throw error
+        if (!req.user || !req.user._id) { // Ensure user is authenticated
+            const error = new Error("User is not authorized.");
+            res.statusCode = 401;
+            throw error;
         }
-  
-        const subscription=await Subscription.findByIdAndUpdate(
-            req.params.id,
-            {...req.body},
-             {
-                new: true,           
-                runValidators: true  
-             }
+
+        const { name } = req.params; // Get the subscription name from URL parameters
+
+        const subscription = await Subscription.findOneAndUpdate(
+            { name: name, user: req.user._id }, 
+            { status: 'cancelled' },             
+            {
+                new: true,           // Return the modified document rather than the original
+                runValidators: true  // Run model validators on the update
+            }
         );
 
-        if(!subscription){
-            return res.status(404).json({cancel: false,message:"subscription not found to cancel"});
+        if (!subscription) {
+            return res.status(404).json({ cancel: false, message: "Subscription not found or you don't have permission to cancel it." });
         }
 
-        res.status(200).json({update: true, message: `${subscription.id} - status updated. current status: ${subscription.status}`});
-        
+        res.status(200).json({ update: true, message: `Subscription '${subscription.name}' status updated to 'cancelled'.` });
+
     } catch (error) {
-        next(error);
+        console.error("Error canceling subscription:", error); // Log the error for debugging
+        next(error); // Pass error to the next middleware (error handler)
     }
 };
 

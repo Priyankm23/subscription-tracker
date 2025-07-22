@@ -115,7 +115,7 @@ async function loadDashboard() {
       datasets: [{
         label: 'By Frequency',
         data: freqValues,
-        backgroundColor: ['#ff3333', '#ffff00', '#0066ff', '#00cc00'], // Chart 1, 2, 3, 4
+        backgroundColor: ['#ba68c8', '#ffff00', '#0066ff', '#00cc00'], // Chart 1, 2, 3, 4
         borderWidth: 1,
         borderColor: '#ffffff' // Card Background for border between segments
       }]
@@ -177,6 +177,61 @@ async function loadDashboard() {
     const editButton = div.querySelector('.edit-btn');
     editButton.addEventListener('click', () => {
       showEditModal(sub); // Call the new modal function
+    });
+
+    const deleteButton = div.querySelector('.delete-btn');
+    deleteButton.addEventListener('click', async () => {
+      if (confirm(`Are you sure you want to delete the subscription "${sub.name}"?`)) {
+        try {
+          const deleteRes = await fetch(`/api/v1/subscriptions/delete/${sub.name}`, { // Use backticks for template literal
+            method: 'DELETE',
+            credentials: 'include'
+          });
+
+          const deleteResult = await deleteRes.json();
+
+          if (deleteRes.ok) {
+            alert(deleteResult.message);
+            location.href = "/dashboard" // Reload the dashboard to reflect changes
+          } else {
+            alert(`Failed to delete subscription: ${deleteResult.message || deleteRes.statusText}`);
+            console.error('Delete failed:', deleteResult);
+          }
+        } catch (error) {
+          alert('An error occurred while deleting the subscription.');
+          console.error('Error deleting subscription:', error);
+        }
+      }
+    });
+
+    const cancelButton = div.querySelector('.cancel-btn');
+    cancelButton.addEventListener('click', async () => {
+      if (confirm(`Are you sure you want to cancel the subscription "${sub.name}"? This will set its status to 'cancelled'.`)) {
+        try {
+          const cancelRes = await fetch(`/api/v1/subscriptions/cancel/${sub.name}`, {
+            method: 'PUT', // Use PUT for updating status
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json' // Important for PUT/POST requests
+            },
+            // No body is needed if only status is changed on backend by route param
+            // body: JSON.stringify({ status: 'cancelled' }) // Backend logic sets this, so not strictly needed here
+          });
+
+          const cancelResult = await cancelRes.json();
+
+          if (cancelRes.ok) {
+            alert(cancelResult.message);
+            location.href="/dashboard"; // Reload the dashboard to reflect changes
+          } else {
+            alert(`Failed to cancel subscription: ${cancelResult.message || cancelRes.statusText}`);
+            console.error('Cancel failed:', cancelResult);
+          }
+        } catch (error) {
+          alert('An error occurred while canceling the subscription.');
+          console.error('Error canceling subscription:', error);
+        }
+      }
     });
   });
 }
@@ -265,7 +320,7 @@ editForm.addEventListener('submit', async (e) => {
     if (updateRes.ok) {
       alert(`Subscription "${originalName}" updated successfully!`);
       hideEditModal();
-      location.href="/dashboard" // Reload dashboard to reflect changes
+      location.href = "/dashboard" // Reload dashboard to reflect changes
     } else {
       alert(`Failed to update subscription: ${updateResult.message || updateRes.statusText}`);
       console.error('Update failed:', updateResult);
