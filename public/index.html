@@ -3,128 +3,154 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Auth | Login & Signup</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="auth.css">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    </head>
+    <title>Subscription Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
   <body>
-    <div class="auth-wrapper">
-      <div class="auth-form-container">
-        <h1>Welcome to Subscription Tracker!</h1> <div id="hero-text">
-          <p style="text-align: center;">
-            Effortlessly manage all your subscriptions in one place. Keep track
-            of your spending, never miss a renewal, and gain insights into your
-            financial habits.
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">📊Subscription tracker</div>
+        <ul class="navbar-menu">
+          <li><a href="subscription.html">Add subscription</a></li>
+          <li><a href="info.html">Insights</a></li>
+          <li><a href="admin.html">Admin</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="dashboard">
+      <div class="cards">
+        <div class="card" id="div1">
+          <h3>Total Subscriptions</h3>
+          <p id="total-subs">0</p>
+        </div>
+        <div class="card" id="div2">
+          <h3>Total Spend</h3>
+          <p id="total-spend">0</p>
+        </div>
+        <div class="card" id="div3">
+          <h3>USD Spend</h3>
+          <p id="usd-spend">0</p>
+        </div>
+        <div class="card" id="div4">
+          <h3>INR Spend</h3>
+          <p id="inr-spend">0</p>
+        </div>
+      </div>
+
+      <div class="charts-section">
+        <div class="chart-container small-chart">
+           <h3>Subscriptions by Category</h3>
+          <canvas id="categoryChart"></canvas>
+          <br />
+          <p class="chart-description">
+            This chart shows the distribution of subscriptions across various
+            categories. Categories with higher bars indicate more active
+            subscriptions in that area.
           </p>
-          <p style="text-align: center;">Login or Sign Up to get started!</p>
         </div>
-
-        <div id="auth-forms">
-          <div class="auth-tab-buttons">
-            <button id="loginTab" class="active">Login</button>
-            <button id="signupTab">Sign Up</button>
-          </div>
-
-          <form id="loginForm" class="auth-form active">
-            <div class="auth-form-group">
-              <label for="loginEmail">Email:</label>
-              <input type="email" id="loginEmail" name="email" required />
-            </div>
-            <div class="auth-form-group">
-              <label for="loginPassword">Password:</label>
-              <input type="password" id="loginPassword" name="password" required />
-            </div>
-            <button type="submit" class="auth-submit-button">Login</button>
-            <button type="button" id="googleLogin" class="auth-google-button">
-              <img src="https://www.google.com/favicon.ico" alt="Google icon"> Login with Google
-            </button>
-          </form>
-
-          <form id="signupForm" class="auth-form">
-            <div class="auth-form-group">
-              <label for="signupName">Name:</label>
-              <input type="text" id="signupName" name="name" required />
-            </div>
-            <div class="auth-form-group">
-              <label for="signupEmail">Email:</label>
-              <input type="email" id="signupEmail" name="email" required />
-            </div>
-            <div class="auth-form-group">
-              <label for="signupPassword">Password:</label>
-              <input type="password" id="signupPassword" name="password" required />
-            </div>
-            <button type="submit" class="auth-submit-button">Sign Up</button>
-          </form>
+        <div class="chart-container small-chart">
+          <h3>Frequency Distribution</h3>
+          <canvas id="frequencyChart"></canvas>
+          <p class="chart-description">
+            This pie chart illustrates the distribution of your subscriptions by
+            their billing frequency (daily, weekly, monthly, yearly).
+          </p>
         </div>
+      </div>
+
+      <div class="list">
+        <h3 style="color: #ff3333;">Your Subscriptions</h3>
+        <div id="subscription-list" class="subscription-list-grid"></div>
       </div>
     </div>
 
-    <script>
-      // JavaScript for tab switching
-      document.addEventListener("DOMContentLoaded", () => {
-        const loginTab = document.getElementById("loginTab");
-        const signupTab = document.getElementById("signupTab");
-        const loginForm = document.getElementById("loginForm");
-        const signupForm = document.getElementById("signupForm");
+    <div id="edit-subscription-modal" class="modal-overlay">
+      <div class="modal-content card">
+        <h3 class="modal-title">Edit Subscription</h3>
+        <form id="edit-subscription-form" class="modal-form">
+          <input type="hidden" id="edit-original-name" />
+          <div class="form-group">
+            <label for="edit-name">Name (Cannot be changed)</label>
+            <input type="text" id="edit-name" readonly />
+          </div>
 
-        loginTab.addEventListener("click", () => {
-          loginTab.classList.add("active");
-          signupTab.classList.remove("active");
-          loginForm.classList.add("active");
-          signupForm.classList.remove("active");
-        });
+          <div class="form-group">
+            <label for="edit-price">Price</label>
+            <input type="number" id="edit-price" step="0.01" />
+          </div>
 
-        signupTab.addEventListener("click", () => {
-          signupTab.classList.add("active");
-          loginTab.classList.remove("active");
-          signupForm.classList.add("active");
-          loginForm.classList.remove("active");
-        });
+          <div class="form-group">
+            <label for="edit-currency">Currency</label>
+            <select id="edit-currency">
+              <option value="INR">INR</option>
+              <option value="USD">USD</option>
+            </select>
+          </div>
 
-        // Backend interaction logic (Keep as is)
-        document
-          .getElementById("loginForm")
-          .addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const form = e.target;
-            const res = await fetch("/api/v1/auth/signin", {
-              method: "POST",
-              credentials: "include",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                email: form.email.value,
-                password: form.password.value,
-              }),
-            });
-            const data = await res.json();
-            if (res.ok) location.href = "/dashboard";
-            else alert(data.message || "Login failed");
-          });
+          <div class="form-group">
+            <label for="edit-frequency">Frequency</label>
+            <select id="edit-frequency">
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </select>
+          </div>
 
-        document
-          .getElementById("signupForm")
-          .addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const form = e.target;
-            const res = await fetch("/api/v1/auth/signup", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                name: form.name.value,
-                email: form.email.value,
-                password: form.password.value,
-              }),
-            });
-            const data = await res.json();
-            if (res.ok) alert("Signup successful! Please login.");
-            else alert(data.message || "Signup failed");
-          });
+          <div class="form-group">
+            <label for="edit-category">Category</label>
+            <select id="edit-category">
+              <option value="sports">Sports</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="news">News</option>
+              <option value="lifestyle">Lifestyle</option>
+              <option value="technology">Technology</option>
+              <option value="finance">Finance</option>
+              <option value="learning">Learning</option>
+              <option value="other">Other</option>
+              <option value="education">Education</option>
+            </select>
+          </div>
 
-        document.getElementById("googleLogin").addEventListener("click", () => {
-          window.location.href = "/api/v1/auth/google"; // Your Google OAuth initiation URL
-        });
-      });
-    </script>
+          <div class="form-group">
+            <label for="edit-paymentMethod">Payment Method</label>
+            <input type="text" id="edit-paymentMethod" />
+          </div>
+
+          <div class="form-group">
+            <label for="edit-status">Status</label>
+            <select id="edit-status">
+              <option value="active">Active</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="expired">Expired</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-startDate">Start Date</label>
+            <input type="date" id="edit-startDate" />
+          </div>
+
+          <div class="form-group">
+            <label for="edit-renewalDate">Renewal Date</label>
+            <input type="date" id="edit-renewalDate" />
+          </div>
+
+          <div class="button-group modal-buttons">
+            <button type="submit" class="edit-btn">Save Changes</button>
+            <button type="button" class="cancel-btn" id="cancel-edit-btn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
   </body>
 </html>
