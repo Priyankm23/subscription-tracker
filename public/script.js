@@ -1,3 +1,43 @@
+// script.js
+
+// Helper function to get an emoji icon for a category
+function getCategoryIcon(category) {
+  switch (category.toLowerCase()) {
+    case 'entertainment':
+      return '🎬'; // Movie clapperboard
+    case 'education':
+      return '📚'; // Books
+    case 'sports':
+      return '🏅'; // Sports medal
+    case 'learning':
+      return '🧠'; // Brain / knowledge
+    case 'technology':
+      return '💻'; // Laptop
+    case 'finance':
+      return '💸'; // Money with wings
+    case 'health':
+      return '🏥'; // Hospital
+    case 'food':
+      return '🍔'; // Hamburger
+    case 'gaming':
+      return '🎮'; // Video game controller
+    default:
+      return '🏷️'; // Generic tag
+  }
+}
+
+// Helper function to categorize payment methods
+function getPaymentMethodType(paymentMethod) {
+  const lowerCaseMethod = paymentMethod.toLowerCase();
+  if (lowerCaseMethod.includes('card') || lowerCaseMethod.includes('visa') || lowerCaseMethod.includes('mastercard') || lowerCaseMethod.includes('amex')) {
+    return 'Card';
+  } else if (lowerCaseMethod.includes('upi') || lowerCaseMethod.includes('gpay') || lowerCaseMethod.includes('phonepe') || lowerCaseMethod.includes('paytm')) {
+    return 'UPI';
+  } else {
+    return 'Other';
+  }
+}
+
 async function loadDashboard() {
   const res = await fetch('/api/v1/subscriptions/user', {
     method: 'GET',
@@ -37,14 +77,18 @@ async function loadDashboard() {
   });
 
   const ctx1 = document.getElementById('categoryChart').getContext('2d');
-  new Chart(ctx1, {
+  // Destroy existing chart instance before creating a new one
+  if (window.categoryChart && typeof window.categoryChart.destroy === 'function') {
+    window.categoryChart.destroy();
+  }
+  window.categoryChart = new Chart(ctx1, {
     type: 'bar',
     data: {
       labels: Object.keys(categories),
       datasets: [{
         label: 'Subscriptions per Category',
         data: Object.values(categories),
-        backgroundColor: '#ff3333' /* Using Primary color for bar chart */
+        backgroundColor: '#ff3333'
       }]
     },
     options: {
@@ -52,9 +96,9 @@ async function loadDashboard() {
       plugins: {
         legend: {
           labels: {
-            color: '#000000', // Foreground color for chart legends
+            color: '#000000',
             font: {
-              family: 'Share Tech Mono, monospace' // Apply font-family
+              family: 'Share Tech Mono, monospace'
             }
           }
         }
@@ -62,24 +106,24 @@ async function loadDashboard() {
       scales: {
         x: {
           ticks: {
-            color: '#333333', // Muted color for x-axis labels
+            color: '#333333',
             font: {
-              family: 'Share Tech Mono, monospace' // Apply font-family
+              family: 'Share Tech Mono, monospace'
             }
           },
           grid: {
-            color: 'rgba(0,0,0,0.05)' // Light grid lines
+            color: 'rgba(0,0,0,0.05)'
           }
         },
         y: {
           ticks: {
-            color: '#333333', // Muted color for y-axis labels
+            color: '#333333',
             font: {
-              family: 'Share Tech Mono, monospace' // Apply font-family
+              family: 'Share Tech Mono, monospace'
             }
           },
           grid: {
-            color: 'rgba(0,0,0,0.05)' // Light grid lines
+            color: 'rgba(0,0,0,0.05)'
           }
         }
       }
@@ -115,9 +159,9 @@ async function loadDashboard() {
       datasets: [{
         label: 'By Frequency',
         data: freqValues,
-        backgroundColor: ['#ba68c8', '#ffff00', '#0066ff', '#00cc00'], // Chart 1, 2, 3, 4
+        backgroundColor: ['#ba68c8', '#ffff00', '#0066ff', '#00cc00'],
         borderWidth: 1,
-        borderColor: '#ffffff' // Card Background for border between segments
+        borderColor: '#ffffff'
       }]
     },
     options: {
@@ -126,9 +170,9 @@ async function loadDashboard() {
         legend: {
           position: 'top',
           labels: {
-            color: '#000000', // Foreground color for chart legends
+            color: '#000000',
             font: {
-              family: 'Share Tech Mono, monospace' // Apply font-family
+              family: 'Share Tech Mono, monospace'
             }
           }
         },
@@ -151,9 +195,24 @@ async function loadDashboard() {
 
   subscriptions.forEach(sub => {
     const div = document.createElement('div');
-    // Change this line:
-    div.className = 'subscription-list-grid-item'; // This was previously a Tailwind class
-    // Make sure it's 'subscription-list-grid-item' to match styles.css
+    div.className = 'subscription-list-grid-item';
+
+    const isCancelled = sub.status.toLowerCase() === 'cancelled';
+
+    let actionButtonsHTML = '';
+    if (isCancelled) {
+      actionButtonsHTML = `
+        <span class="cancelled-text">Cancelled</span>
+        <button class="renew-btn" data-subscription-name="${sub.name}">Renew</button>
+      `;
+    } else {
+      actionButtonsHTML = `
+        <button class="edit-btn" data-subscription-name="${sub.name}">Edit</button>
+        <button class="delete-btn" data-subscription-name="${sub.name}">Delete</button>
+        <button class="cancel-btn" data-subscription-name="${sub.name}">Cancel</button>
+      `;
+    }
+
 
     div.innerHTML = `
       <span><strong>Name:</strong> ${sub.name}</span>
@@ -166,73 +225,109 @@ async function loadDashboard() {
       <span><strong>Renewal Date:</strong> ${new Date(sub.renewalDate).toLocaleDateString()}</span>
 
       <div class="button-group">
-        <button class="edit-btn" data-subscription-name="${sub.name}">Edit</button>
-        <button class="delete-btn" data-subscription-name="${sub.name}">Delete</button>
-        <button class="cancel-btn" data-subscription-name="${sub.name}">Cancel</button>
+        ${actionButtonsHTML}
       </div>
     `;
     listContainer.appendChild(div);
 
-    // Add event listener to the Edit button
-    const editButton = div.querySelector('.edit-btn');
-    editButton.addEventListener('click', () => {
-      showEditModal(sub); // Call the new modal function
-    });
+    // Add event listener to the Edit button (only if not cancelled)
+    if (!isCancelled) {
+        const editButton = div.querySelector('.edit-btn');
+        editButton.addEventListener('click', () => {
+            showEditModal(sub);
+        });
+    }
 
+
+    // Add event listener to the Delete button (always available)
     const deleteButton = div.querySelector('.delete-btn');
-    deleteButton.addEventListener('click', async () => {
-      if (confirm(`Are you sure you want to delete the subscription "${sub.name}"?`)) {
-        try {
-          const deleteRes = await fetch(`/api/v1/subscriptions/delete/${sub.name}`, { // Use backticks for template literal
-            method: 'DELETE',
-            credentials: 'include'
-          });
+    if (deleteButton) { // Ensure button exists before adding listener
+        deleteButton.addEventListener('click', async () => {
+            if (confirm(`Are you sure you want to delete the subscription "${sub.name}"?`)) {
+                try {
+                    const deleteRes = await fetch(`/api/v1/subscriptions/delete/${sub.name}`, {
+                        method: 'DELETE',
+                        credentials: 'include'
+                    });
 
-          const deleteResult = await deleteRes.json();
+                    const deleteResult = await deleteRes.json();
 
-          if (deleteRes.ok) {
-            alert(deleteResult.message);
-            location.href = "/dashboard" // Reload the dashboard to reflect changes
-          } else {
-            alert(`Failed to delete subscription: ${deleteResult.message || deleteRes.statusText}`);
-            console.error('Delete failed:', deleteResult);
-          }
-        } catch (error) {
-          alert('An error occurred while deleting the subscription.');
-          console.error('Error deleting subscription:', error);
-        }
-      }
-    });
+                    if (deleteRes.ok) {
+                        alert(deleteResult.message);
+                        location.href = "/dashboard" // Reload the dashboard to reflect changes
+                    } else {
+                        alert(`Failed to delete subscription: ${deleteResult.message || deleteRes.statusText}`);
+                        console.error('Delete failed:', deleteResult);
+                    }
+                } catch (error) {
+                    alert('An error occurred while deleting the subscription.');
+                    console.error('Error deleting subscription:', error);
+                }
+            }
+        });
+    }
 
+    // Add event listener to the Cancel button (only if not cancelled)
     const cancelButton = div.querySelector('.cancel-btn');
-    cancelButton.addEventListener('click', async () => {
-      if (confirm(`Are you sure you want to cancel the subscription "${sub.name}"? This will set its status to 'cancelled'.`)) {
-        try {
-          const cancelRes = await fetch(`/api/v1/subscriptions/cancel/${sub.name}`, {
-            method: 'PUT', // Use PUT for updating status
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json' // Important for PUT/POST requests
-            },
-            // No body is needed if only status is changed on backend by route param
-            // body: JSON.stringify({ status: 'cancelled' }) // Backend logic sets this, so not strictly needed here
-          });
+    if (cancelButton && !isCancelled) { // Ensure button exists and is not disabled
+        cancelButton.addEventListener('click', async () => {
+            if (confirm(`Are you sure you want to cancel the subscription "${sub.name}"? This will set its status to 'cancelled'.`)) {
+                try {
+                    const cancelRes = await fetch(`/api/v1/subscriptions/cancel/${sub.name}`, {
+                        method: 'PUT',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    });
 
-          const cancelResult = await cancelRes.json();
+                    const cancelResult = await cancelRes.json();
 
-          if (cancelRes.ok) {
-            alert(cancelResult.message);
-            location.href="/dashboard"; // Reload the dashboard to reflect changes
-          } else {
-            alert(`Failed to cancel subscription: ${cancelResult.message || cancelRes.statusText}`);
-            console.error('Cancel failed:', cancelResult);
-          }
-        } catch (error) {
-          alert('An error occurred while canceling the subscription.');
-          console.error('Error canceling subscription:', error);
-        }
-      }
-    });
+                    if (cancelRes.ok) {
+                        alert(cancelResult.message);
+                        location.href="/dashboard"; // Reload the dashboard to reflect changes
+                    } else {
+                        alert(`Failed to cancel subscription: ${cancelResult.message || cancelRes.statusText}`);
+                        console.error('Cancel failed:', cancelResult);
+                    }
+                } catch (error) {
+                    alert('An error occurred while canceling the subscription.');
+                    console.error('Error canceling subscription:', error);
+                }
+            }
+        });
+    }
+
+    // Add event listener to the Renew button (only if cancelled)
+    const renewButton = div.querySelector('.renew-btn');
+    if (renewButton && isCancelled) { // Ensure button exists and is for cancelled subscriptions
+        renewButton.addEventListener('click', async () => {
+            if (confirm(`Are you sure you want to renew the subscription "${sub.name}"? This will set its status to 'active'.`)) {
+                try {
+                    const renewRes = await fetch(`/api/v1/subscriptions/renew/${sub.name}`, {
+                        method: 'PUT',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    });
+
+                    const renewResult = await renewRes.json();
+
+                    if (renewRes.ok) {
+                        alert(renewResult.message);
+                        location.href="/dashboard"; // Reload the dashboard to reflect changes
+                    } else {
+                        alert(`Failed to renew subscription: ${renewResult.message || renewRes.statusText}`);
+                        console.error('Renew failed:', renewResult);
+                    }
+                } catch (error) {
+                    alert('An error occurred while renewing the subscription.');
+                    console.error('Error renewing subscription:', error);
+                }
+            }
+        });
+    }
   });
 }
 
@@ -256,41 +351,37 @@ const editRenewalDate = document.getElementById('edit-renewalDate');
 
 
 function showEditModal(subscription) {
-  // Store original name (used in URL for PUT request)
   editOriginalName.value = subscription.name;
-
-  // Populate form fields with current subscription data
-  editName.value = subscription.name; // Readonly field
+  editName.value = subscription.name;
   editPrice.value = subscription.price;
   editCurrency.value = subscription.currency;
   editFrequency.value = subscription.frequency;
   editCategory.value = subscription.category;
   editPaymentMethod.value = subscription.paymentMethod;
   editStatus.value = subscription.status;
-  editStartDate.value = new Date(subscription.startDate).toISOString().split('T')[0]; // Format to YYYY-MM-DD
-  editRenewalDate.value = new Date(subscription.renewalDate).toISOString().split('T')[0]; // Format to YYYY-MM-DD
+  editStartDate.value = new Date(subscription.startDate).toISOString().split('T')[0];
+  editRenewalDate.value = new Date(subscription.renewalDate).toISOString().split('T')[0];
 
   editModal.classList.add('active');
-  document.body.style.overflow = 'hidden'; // Prevent scrolling background
+  document.body.style.overflow = 'hidden';
 }
 
 function hideEditModal() {
   editModal.classList.remove('active');
-  document.body.style.overflow = ''; // Restore scrolling
-  editForm.reset(); // Clear form fields
+  document.body.style.overflow = '';
+  editForm.reset();
 }
 
 // Event listeners for modal actions
 cancelEditBtn.addEventListener('click', hideEditModal);
 editModal.addEventListener('click', (e) => {
-  // Close modal if clicked outside modal-content
   if (e.target === editModal) {
     hideEditModal();
   }
 });
 
 editForm.addEventListener('submit', async (e) => {
-  e.preventDefault(); // Prevent default form submission
+  e.preventDefault();
 
   const originalName = editOriginalName.value;
 
@@ -320,7 +411,7 @@ editForm.addEventListener('submit', async (e) => {
     if (updateRes.ok) {
       alert(`Subscription "${originalName}" updated successfully!`);
       hideEditModal();
-      location.href = "/dashboard" // Reload dashboard to reflect changes
+      location.href = "/dashboard"
     } else {
       alert(`Failed to update subscription: ${updateResult.message || updateRes.statusText}`);
       console.error('Update failed:', updateResult);

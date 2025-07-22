@@ -1,0 +1,36 @@
+/* Add these styles to your existing styles.css file */
+
+/* Admin specific card background colors (optional, if you want different shades for admin cards) */
+#admin-card-total-subs {
+  background-color: #f0f8ff; /* Light blue */
+}
+
+#admin-card-total-users {
+  background-color: #fff0f5; /* Light pink */
+}
+
+/* If you want "Cancelled" text or "Renew" button styles to be specific to admin,
+   you would add them here. However, since these elements are already
+   styled for the user dashboard in the previous update to styles.css,
+   they should automatically apply to the admin dashboard if you reuse the classes.
+   So, no new CSS is strictly needed for those if the classes are consistent.
+*/
+
+/* Example for potential unique admin list item styling (if needed) */
+/* .subscription-list-grid#upcoming-renewals-list > div {
+    background-color: #e6ffe6;
+    border: 1px dashed #66cc66;
+} */
+
+/* Ensure any new elements in admin.html follow the existing styles */
+.admin-card-total-subs h3,
+.admin-card-total-users h3 {
+    color: #0066ff; /* Using Accent color for admin card headings */
+}
+
+/* Adjustments for the new list section in admin */
+#upcoming-renewals-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust columns for renewals list */
+    gap: 1.5rem;
+}

@@ -199,5 +199,36 @@ export const getUpcomingRenewals=async(req,res,next)=>{
     } catch (error) {
         next(error);
     }
-
 }
+
+export const renewSubscription = async (req, res, next) => {
+    try {
+        if (!req.user || !req.user._id) {
+            const error = new Error("User is not authorized.");
+            res.statusCode = 401;
+            throw error;
+        }
+
+        const { name } = req.params; // Get the subscription name from URL parameters
+
+        // Find the subscription by its name and user ID, then update its status to 'active'
+        const subscription = await Subscription.findOneAndUpdate(
+            { name: name, user: req.user._id }, // Filter by name and user ID
+            { status: 'active' },             // Set status to 'active'
+            {
+                new: true,           // Return the modified document rather than the original
+                runValidators: true  // Run model validators on the update
+            }
+        );
+
+        if (!subscription) {
+            return res.status(404).json({ renew: false, message: "Subscription not found or you don't have permission to renew it." });
+        }
+
+        res.status(200).json({ update: true, message: `Subscription '${subscription.name}' status updated to 'active' (renewed).` });
+
+    } catch (error) {
+        console.error("Error renewing subscription:", error);
+        next(error);
+    }
+};

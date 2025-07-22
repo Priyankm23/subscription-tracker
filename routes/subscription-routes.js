@@ -6,6 +6,7 @@ import { cancelSubscription,
  getSubscriptionById,
  getUpcomingRenewals,
  getUserSubscription, 
+ renewSubscription,
  updateSubscription } 
 from "../controllers/subscription.js";
 import { restrictTo ,authorize} from "../middlewares/authMiddleware.js";
@@ -27,5 +28,7 @@ subscriptionRouter.put('/edit/:name',authorize,updateSubscription);
 subscriptionRouter.delete('/delete/:name',authorize,deleteSubscription);
 
 subscriptionRouter.put('/cancel/:name',authorize,restrictTo(["user"]),cancelSubscription);
+
+subscriptionRouter.put('/renew/:name', authorize, renewSubscription);
 
 export default subscriptionRouter

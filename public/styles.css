@@ -195,6 +195,7 @@ body {
   display: flex;
   gap: 8px; /* Slightly reduced gap between buttons */
   flex-wrap: wrap; /* Allow buttons to wrap on smaller cards */
+  align-items: center; /* Vertically align items in the button group */
 }
 
 .button-group button {
@@ -206,6 +207,7 @@ body {
   transition: background 0.3s;
   border: 1px solid #000000;
   font-size: 0.85rem; /* Slightly smaller font for buttons */
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.75); /* Matching other elements */
 }
 
 .edit-btn {
@@ -229,6 +231,32 @@ body {
 .button-group button:hover {
   opacity: 0.9;
 }
+
+/* NEW: Style for 'Cancelled' text */
+.cancelled-text {
+    font-weight: bold;
+    color: #DC2626; /* A red color for "Cancelled" */
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #FEE2E2; /* Light red background */
+    margin: 0 5px; /* Adjust spacing as needed */
+    display: inline-block;
+    align-self: center; /* Center vertically if in flex container */
+    border: 1px solid #B91C1C; /* Darker red border */
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.75); /* Matching other elements */
+}
+
+/* NEW: Style for 'Renew' button */
+.renew-btn {
+    background-color: #22C55E; /* A vibrant green */
+    color: white;
+    font-family: "Share Tech Mono", monospace;
+}
+
+.renew-btn:hover {
+    background-color: #16A34A; /* Darker green on hover */
+}
+
 
 /* MODAL STYLES */
 .modal-overlay {
@@ -355,4 +383,14 @@ body {
   .chart-description {
     text-align: center; /* Better alignment on narrow screens */
   }
+}
+
+/* Add these to your existing styles.css */
+
+#admin-card-active-subs {
+  background-color: #e0ffe0; /* Light green */
+}
+
+#admin-card-cancelled-subs {
+  background-color: #ffe0e0; /* Light red */
 }

@@ -1,7 +1,7 @@
 import express, { urlencoded } from "express"
 import {PORT} from "./config/env.js"
 import authRouter from "./routes/auth-routes.js"
-import userRouter from "./routes/user-routes.js"
+import adminRouter from "./routes/admin-routes.js"
 import subscriptionRouter from "./routes/subscription-routes.js"
 import connectToDatabase from './database/dbconnection.js'
 import errorMiddleware from "./middlewares/errorMiddleware.js"
@@ -9,7 +9,6 @@ import cookieParser from "cookie-parser"
 import arcjetMiddleware from "./middlewares/arcjetMiddleware.js"
 import workflowRouter from "./routes/workflow-routes.js"
 import passport from "./controllers/auth.js";
-import { authorize ,restrictTo } from "./middlewares/authMiddleware.js"
 import morgan from "morgan"
 import path from "path"
 import { fileURLToPath } from 'url';
@@ -27,7 +26,7 @@ app.use(morgan('dev'));
 app.use(arcjetMiddleware);
 
 app.use('/api/v1/auth',authRouter);
-app.use('/api/v1/users',authorize,restrictTo(["admin"]),userRouter);
+app.use('/api/v1/admin',adminRouter);
 app.use('/api/v1/subscriptions',subscriptionRouter);
 app.use('/api/v1/workflows',workflowRouter);
 
