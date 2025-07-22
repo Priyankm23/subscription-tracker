@@ -1,0 +1,181 @@
+/* AUTH FORM SPECIFIC STYLES - auth.css */
+
+.auth-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center vertically in auth.html */
+  min-height: 100vh; /* Take full viewport height for centering */
+  padding: 2rem; /* Add padding for small screens */
+  background-color: #FFFFFF; /* Ensure body background is consistent */
+  color: #000000; /* Default text color */
+}
+
+/* Auth container inherits card styling from styles.css */
+/* .auth-form-container already included in .card in styles.css */
+.auth-form-container {
+  width: 100%;
+  max-width: 550px; /* Increased max-width to make the form wider */
+  padding: 2rem;
+  box-sizing: border-box; /* Include padding in width */
+  text-align: center; /* Center headings/buttons within the form */
+
+  /* Added these styles to explicitly ensure the border and shadow as per theme */
+  background: #FFFFFF; /* Card Background from theme*/
+  border-radius: 10px; /* Border radius from theme*/
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 1); /* Black stroke/shadow from theme*/
+  border: 1px solid #000000; /* Thin black border from theme*/
+  color: #000000; /* Card Foreground from theme*/
+}
+
+.auth-form-container h1 {
+  font-size: 2rem;
+  color: #ff3333; /* Primary color for headings from theme*/
+  margin-bottom: 1.5rem;
+}
+
+#hero-text {
+  flex: 1;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: left; /* Ensure text aligns left */
+  margin-bottom: 2.5rem; /* Add more space below the text */
+  color: #333333; /* Muted color for descriptive text from theme*/
+}
+
+#hero-text p {
+  margin-bottom: 1rem; /* Space between paragraphs in the description */
+}
+#hero-text p:last-child {
+  margin-bottom: 0; /* No margin after the last paragraph */
+}
+
+
+.auth-tab-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  gap: 10px; /* Space between tabs */
+}
+
+.auth-tab-buttons button {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #000000; /* Black border for tabs from theme*/
+  border-radius: 6px;
+  background-color: #FFFFFF; /* White background for inactive tabs from theme*/
+  color: #000000; /* Black text for inactive tabs from theme*/
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); /* Subtle shadow for tabs */
+}
+
+.auth-tab-buttons button.active {
+  background-color: #0066ff; /* Accent color for active tab from theme*/
+  color: #FFFFFF; /* White text for active tab from theme*/
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 1); /* More prominent shadow for active from theme*/
+  transform: translate(-2px, -2px); /* Slightly raise active tab */
+}
+
+.auth-form-group {
+  margin: 1.2rem 0;
+  text-align: left;
+  padding: 0 0.25rem; /* Equal padding on both sides for centering */
+  width: 95%;
+  box-sizing: border-box;
+  margin-right: 2rem;
+}
+
+.auth-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333333; /* Muted color for labels from theme*/
+  font-size: 0.95rem;
+}
+
+.auth-form-group input[type="text"],
+.auth-form-group input[type="email"],
+.auth-form-group input[type="password"] {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #000000; /* Black border for inputs from theme*/
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #000000; /* Text color from theme*/
+  background-color: #F8F8F8; /* Light background for inputs */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Subtle inner shadow */
+}
+
+.auth-form-group input[type="text"]:focus,
+.auth-form-group input[type="email"]:focus,
+.auth-form-group input[type="password"]:focus {
+  border-color: #0066ff; /* Accent color on focus from theme*/
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2); /* Glow on focus */
+}
+
+.auth-submit-button {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1.5rem;
+  background-color: #0066ff; /* Accent color for submit button from theme*/
+  color: #FFFFFF; /* Accent Foreground from theme*/
+  border: 1px solid #000000; /* Black border for button from theme*/
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 1); /* Card-like shadow for button from theme*/
+}
+
+.auth-submit-button:hover {
+  background-color: #0056e6; /* Slightly darker accent on hover */
+  opacity: 0.9;
+}
+
+.auth-google-button {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  background-color: #FF3333; /* Changed to Primary color for Google button from theme*/
+  color: #FFFFFF; /* Primary Foreground from theme*/
+  border: 1px solid #000000; /* Added black border as per theme*/
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 1); /* Card-like shadow from theme*/
+}
+.auth-google-button:hover {
+  opacity: 0.9;
+}
+.auth-google-button img {
+  width: 18px;
+  height: 18px;
+  /* Add filter to invert Google logo color if background is dark and logo needs to be white */
+  /* filter: invert(1); */
+}
+
+/* Hide inactive forms */
+.auth-form {
+  display: none;
+}
+.auth-form.active {
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .auth-form-container {
+    max-width: 90%; /* Adjust width on smaller screens */
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+}

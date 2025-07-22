@@ -1,60 +1,19 @@
-* {
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-}
+/* General body background based on the palette */
 body {
-  background: #f4d35e;
+  background: #FFFFFF; /* Background color from the palette */
   padding: 2rem;
-  color: #333;
+  color: #000000; /* Foreground color from the palette */
+  font-family: 'Share Tech Mono', monospace;
 }
 .dashboard {
   display: grid;
   gap: 2rem;
 }
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-}
-.card {
-  background: #fcf5c7;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  text-align: center;
-}
-.card h3 {
-  font-size: 1.25rem;
-  color: #6366F1;
-  margin-bottom: 0.5rem;
-}
-.chart-container {
-  background: #fcf5c7;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.list {
-  background: #faf0ca;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.list h4 {
-  margin-bottom: 1rem;
-  color: #4F46E5;
-}
-.list-item {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
-}
 
-/* Navbar styles */
+/* Navbar styles (keeping as is from previous iteration) */
 .navbar {
-  background-color: #ee964b;
-  color: #fff;
+  background-color: #000000;
+  color: #FFFFFF;
   padding: 1rem 2rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
@@ -72,6 +31,7 @@ body {
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: 600;
+  color: #FFFFFF;
 }
 
 .navbar-menu {
@@ -81,7 +41,7 @@ body {
 }
 
 .navbar-menu li a {
-  color: #fff;
+  color: #FFFFFF;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;
@@ -91,17 +51,57 @@ body {
   color: #c7d2fe;
 }
 
+
+/* Unified Card Styling */
+/* Apply this consistent style to all elements that should look like the provided card image */
+.card,
+.chart-container,
+.list, /* The container for the subscription list */
+.subscription-list-grid > div { /* Individual subscription items */
+  background: #FFFFFF; /* Card Background from palette */
+  border-radius: 10px; /* Rounded corners as per example */
+  padding: 1.5rem;
+  /* The exact box-shadow from image_0567b7.png and image_04f776.png */
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 1); /* Reduced offset for a thinner shadow */
+  border: 1px solid #000000; /* Keep border thin at 1px */
+  color: #000000; /* Foreground color */
+}
+
+/* Specific adjustments for initial cards (Total Subscriptions, Spend) */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem; /* Increased gap to accommodate larger shadow */
+}
+
+.card h3 {
+  font-size: 1.25rem;
+  color: #ff3333; /* Primary color for headings */
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+    color: #333333; /* Muted color for paragraph text */
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+/* Charts Section */
 .charts-section {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem; /* Increased gap to accommodate larger shadow */
   justify-content: space-between;
 }
 
+/* Chart Container specific padding/size might need minor tweaks if content overflows */
+.chart-container {
+  padding: 1.5rem; /* Already set above, just confirming */
+}
+
 .small-chart {
-  flex: 1 1 350px;
   max-width: 100%;
-  max-height: 450px;
+  max-height: 500px;
 }
 
 #frequencyChart {
@@ -111,65 +111,224 @@ body {
   margin: auto;
 }
 
-.curChart{
-    display: inline;
+.curChart {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 
-/* Enhanced subscription list */
-.subscription-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.curChart p {
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
-.subscription-item {
-  background-color: #f3f4f6;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+/* Chart Description Style */
+.chart-description {
+  color: #000000; /* Unified text color for both descriptions */
   font-size: 0.9rem;
-  display: flex;
-  flex-direction: column;
+  margin-top: 1rem;
+  text-align: left;
+}
+/* Subscription List Section */
+.list {
+  padding: 1.5rem; /* Already set above, just confirming */
 }
 
-.subscription-item span {
-  margin: 2px 0;
+.list h4 {
+  margin-bottom: 1rem;
+  color: #ff3333; /* Primary color for list headings */
+}
+
+/* Enhanced subscription list grid */
+.subscription-list-grid {
+  display: grid;
+  /* Ensure exactly 3 columns */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; /* Adjusted gap for better spacing */
+}
+
+/* Individual subscription item styling - applies the unified style */
+.subscription-list-grid > div {
+    padding: 1rem;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute content vertically */
+    /* Box-shadow and border applied from the unified style above */
+}
+
+/* Formatting inside each subscription card */
+.subscription-list-grid > div span {
+  margin: 0.2rem 0; /* Smaller margin for less clutter */
+  color: #333333; /* Muted color for details */
+  line-height: 1.3; /* Improve readability */
+}
+
+.subscription-list-grid > div strong {
+  color: #000000; /* Ensure strong labels are clearly visible */
 }
 
 .button-group {
-  margin-top: 1rem;
+  margin-top: 0.8rem; /* Reduced margin for closer buttons */
   display: flex;
-  gap: 10px;
+  gap: 8px; /* Slightly reduced gap between buttons */
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller cards */
 }
 
 .button-group button {
-  padding: 6px 12px;
+  padding: 6px 10px; /* Slightly smaller padding for buttons */
   border: none;
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.3s;
+  border: 1px solid #000000;
+  font-size: 0.85rem; /* Slightly smaller font for buttons */
 }
 
 .edit-btn {
-  background-color: #4f46e5;
-  color: white;
+  background-color: #0066ff; /* Accent color from palette */
+  color: #ffffff; /* Accent Foreground */
 }
 
 .delete-btn {
-  background-color: #dc2626;
-  color: white;
+  background-color: #ff3333; /* Primary color for destructive action */
+  color: #ffffff; /* Primary Foreground */
 }
 
 .cancel-btn {
-  background-color: #f59e0b;
-  color: white;
+  background-color: #ffff00; /* Secondary color for cancel/warning */
+  color: #000000; /* Secondary Foreground */
 }
 
 .button-group button:hover {
   opacity: 0.9;
+}
+
+/* MODAL STYLES */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top of everything */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  /* Inherits .card styling for background, border, shadow, etc. */
+  position: relative;
+  width: 90%;
+  max-width: 500px; /* Limit max width for better readability */
+  max-height: 90vh; /* Limit max height for scrollability */
+  overflow-y: auto; /* Enable scrolling if content overflows */
+  transform: translateY(-20px); /* Slightly move up on show */
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+  transform: translateY(0);
+}
+
+.modal-title {
+  color: #ff3333; /* Primary color for modal title */
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.modal-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.modal-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #333333; /* Muted color for labels */
+  font-size: 0.9rem;
+}
+
+.modal-form input[type="text"],
+.modal-form input[type="number"],
+.modal-form input[type="date"],
+.modal-form select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #CCCCCC; /* Light border for inputs */
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #000000; /* Text color for input */
+  background-color: #F8F8F8; /* Slightly off-white background for inputs */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Subtle inner shadow */
+}
+
+.modal-form input[type="text"]:focus,
+.modal-form input[type="number"]:focus,
+.modal-form input[type="date"]:focus,
+.modal-form select:focus {
+  border-color: #0066ff; /* Accent color on focus */
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.2); /* Light glow on focus */
+}
+
+.modal-form input[readonly] {
+  background-color: #E0E0E0; /* Dim background for readonly fields */
+  cursor: not-allowed;
+}
+
+.modal-buttons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 1rem;
+}
+
+/* Responsive adjustments for smaller screens if needed (optional, but good practice) */
+@media (max-width: 900px) {
+  .subscription-list-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
+  }
+}
+
+@media (max-width: 600px) {
+  .subscription-list-grid {
+    grid-template-columns: 1fr; /* 1 card per row on small screens */
+  }
+  .charts-section {
+    grid-template-columns: 1fr; /* Charts stack on small screens */
+  }
+  .navbar-menu {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .modal-content {
+      padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .charts-section {
+    grid-template-columns: 1fr; /* Stack charts vertically */
+  }
+
+  .chart-description {
+    text-align: center; /* Better alignment on narrow screens */
+  }
 }
 

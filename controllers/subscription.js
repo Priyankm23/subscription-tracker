@@ -118,7 +118,7 @@ export const createSubscription=async(req,res,next)=>{
 
 export const deleteSubscription=async(req,res,next)=>{
     try {
-        if(req.user._id){
+        if(!req.user._id){
             const error = new Error("user is not authorized");
             res.statusCode=401
             throw error;

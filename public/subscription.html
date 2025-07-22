@@ -10,15 +10,19 @@
   <div class="form-container">
     <h2>Add Subscription</h2>
     <form id="subscriptionForm">
+      <label for="name">Name:</label>
       <input type="text" id="name" placeholder="Name" required />
       
+      <label for="price">Price:</label>
       <input type="number" id="price" placeholder="Price" min="0" required />
       
+      <label for="currency">Currency:</label>
       <select id="currency" required>
         <option value="INR">INR</option>
         <option value="USD">USD</option>
       </select>
       
+      <label for="frequency">Frequency:</label>
       <select id="frequency" required>
         <option value="">Select Frequency</option>
         <option value="daily">Daily</option>
@@ -27,6 +31,7 @@
         <option value="yearly">Yearly</option>
       </select>
       
+      <label for="category">Category:</label>
       <select id="category" required>
         <option value="">Select Category</option>
         <option value="sports">Sports</option>
@@ -40,15 +45,17 @@
         <option value="other">Other</option>
       </select>
       
-      <input type="text" id="paymentMethod" placeholder="Payment Method (e.g., UPI, Card)" required />
+      <label for="paymentMethod">Payment Method:</label>
+      <input type="text" id="paymentMethod" placeholder="e.g., UPI, Card" required />
 
+      <label for="status">Status:</label>
       <select id="status">
         <option value="active">Active</option>
         <option value="cancelled">Cancelled</option>
         <option value="expired">Expired</option>
       </select>
 
-      <label>Start Date</label>
+      <label for="startDate">Start Date:</label>
       <input type="date" id="startDate" required />
 
       <button type="submit">Add Subscription</button>

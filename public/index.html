@@ -1,70 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subscription Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
-  <link
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subscription Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
       href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
       rel="stylesheet"
     />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
     <nav class="navbar">
-    <div class="navbar-container">
-      <div class="navbar-brand">📊Subscription tracker</div>
-      <ul class="navbar-menu">
-        <li><a href="subscription.html">Add subscription</a></li>
-        <li><a href="#">Admin</a></li>
-        <li><a href="#">About</a></li>
-      </ul>
-    </div>
-  </nav>
- <div class="dashboard">
-  <!-- Cards -->
-  <div class="cards">
-  <div class="card">
-    <h3>Total Subscriptions</h3>
-    <p id="total-subs">0</p>
-  </div>
-  <div class="card">
-    <h3>Total Spend</h3>
-    <p id="total-spend">0</p>
-  </div>
-  <div class="card">
-    <h3>USD Spend</h3>
-    <p id="usd-spend">0</p>
-  </div>
-  <div class="card">
-    <h3>INR Spend</h3>
-    <p id="inr-spend">0</p>
-  </div>
-</div>
+      <div class="navbar-container">
+        <div class="navbar-brand">📊Subscription tracker</div>
+        <ul class="navbar-menu">
+          <li><a href="subscription.html">Add subscription</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="dashboard">
+      <div class="cards">
+        <div class="card">
+          <h3>Total Subscriptions</h3>
+          <p id="total-subs">0</p>
+        </div>
+        <div class="card">
+          <h3>Total Spend</h3>
+          <p id="total-spend">0</p>
+        </div>
+        <div class="card">
+          <h3>USD Spend</h3>
+          <p id="usd-spend">0</p>
+        </div>
+        <div class="card">
+          <h3>INR Spend</h3>
+          <p id="inr-spend">0</p>
+        </div>
+      </div>
 
-  <!-- Charts section: horizontal layout -->
-  <div class="charts-section">
-    <div class="chart-container small-chart">
-      <canvas id="categoryChart"></canvas>
-      <br>
-      <p class="chart-description">
-       This chart shows the distribution of subscriptions across various categories.
-       Categories with higher bars indicate more active subscriptions in that area.
-      </p>
-    </div>
-    <div class="chart-container small-chart curChart">
-      <p>frequency distribution</p>
-      <canvas id="frequencyChart" width="400" height="400"></canvas>
-    </div>
-  </div>
+      <div class="charts-section">
+        <div class="chart-container small-chart">
+           <h3>Subscriptions by Category</h3>
+          <canvas id="categoryChart"></canvas>
+          <br />
+          <p class="chart-description">
+            This chart shows the distribution of subscriptions across various
+            categories. Categories with higher bars indicate more active
+            subscriptions in that area.
+          </p>
+        </div>
+        <div class="chart-container small-chart">
+          <h3>Frequency Distribution</h3>
+          <canvas id="frequencyChart"></canvas>
+          <p class="chart-description">
+            This pie chart illustrates the distribution of your subscriptions by
+            their billing frequency (daily, weekly, monthly, yearly).
+          </p>
+        </div>
+      </div>
 
-  <!-- Subscription List -->
-  <div class="list">
-    <h4>Your Subscriptions</h4>
-    <div id="subscription-list" class="subscription-list"></div>
-  </div>
-</div>
-  <script src="script.js"></script>
-</body>
+      <div class="list">
+        <h3 style="color: #ff3333;">Your Subscriptions</h3>
+        <div id="subscription-list" class="subscription-list-grid"></div>
+      </div>
+    </div>
+
+    <div id="edit-subscription-modal" class="modal-overlay">
+      <div class="modal-content card">
+        <h3 class="modal-title">Edit Subscription</h3>
+        <form id="edit-subscription-form" class="modal-form">
+          <input type="hidden" id="edit-original-name" />
+          <div class="form-group">
+            <label for="edit-name">Name (Cannot be changed)</label>
+            <input type="text" id="edit-name" readonly />
+          </div>
+
+          <div class="form-group">
+            <label for="edit-price">Price</label>
+            <input type="number" id="edit-price" step="0.01" />
+          </div>
+
+          <div class="form-group">
+            <label for="edit-currency">Currency</label>
+            <select id="edit-currency">
+              <option value="INR">INR</option>
+              <option value="USD">USD</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-frequency">Frequency</label>
+            <select id="edit-frequency">
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-category">Category</label>
+            <select id="edit-category">
+              <option value="sports">Sports</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="news">News</option>
+              <option value="lifestyle">Lifestyle</option>
+              <option value="technology">Technology</option>
+              <option value="finance">Finance</option>
+              <option value="learning">Learning</option>
+              <option value="other">Other</option>
+              <option value="education">Education</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-paymentMethod">Payment Method</label>
+            <input type="text" id="edit-paymentMethod" />
+          </div>
+
+          <div class="form-group">
+            <label for="edit-status">Status</label>
+            <select id="edit-status">
+              <option value="active">Active</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="expired">Expired</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-startDate">Start Date</label>
+            <input type="date" id="edit-startDate" />
+          </div>
+
+          <div class="form-group">
+            <label for="edit-renewalDate">Renewal Date</label>
+            <input type="date" id="edit-renewalDate" />
+          </div>
+
+          <div class="button-group modal-buttons">
+            <button type="submit" class="edit-btn">Save Changes</button>
+            <button type="button" class="cancel-btn" id="cancel-edit-btn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
