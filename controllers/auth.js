@@ -118,4 +118,17 @@ passport.use(new GoogleStrategy({
   }
 ));
 
+passport.serializeUser((user, done) => {
+  done(null, user.id); // Or user.email or any unique identifier
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id); // Or find by the identifier you used in serializeUser
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
+});
+
 export default passport;

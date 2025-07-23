@@ -46,10 +46,15 @@ app.get('/dashboard', (req, res) => {
 });
 
 app.get('/auth/google/callback',
-    passport.authenticate("google",{session: false, failureRedirect: "/" }),
+    passport.authenticate("google",{session: false, failureRedirect: "/index.html " }),
     (req,res)=>{
+      if(req.user && req.user.jwt){
         res.cookie("token",req.user.jwt,{httpOnly: true, secure: false,path: "/"});
-        res.status(200).json({data:req.user});
+        res.redirect("/dashboard.html");
+      }
+      else{
+         res.redirect("/auth.html?error=google_login_failed");
+      }
     }
 );
 

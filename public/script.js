@@ -88,7 +88,7 @@ async function loadDashboard() {
       datasets: [{
         label: 'Subscriptions per Category',
         data: Object.values(categories),
-        backgroundColor: '#ff3333'
+        backgroundColor: '#df2935'
       }]
     },
     options: {
@@ -159,7 +159,7 @@ async function loadDashboard() {
       datasets: [{
         label: 'By Frequency',
         data: freqValues,
-        backgroundColor: ['#ba68c8', '#ffff00', '#0066ff', '#00cc00'],
+        backgroundColor: ['#3772ff', '#df2935', '#fdca40', '#7871aa'],
         borderWidth: 1,
         borderColor: '#ffffff'
       }]

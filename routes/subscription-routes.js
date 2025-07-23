@@ -27,7 +27,7 @@ subscriptionRouter.put('/edit/:name',authorize,updateSubscription);
 
 subscriptionRouter.delete('/delete/:name',authorize,deleteSubscription);
 
-subscriptionRouter.put('/cancel/:name',authorize,restrictTo(["user"]),cancelSubscription);
+subscriptionRouter.put('/cancel/:name',authorize,restrictTo(["user","admin"]),cancelSubscription);
 
 subscriptionRouter.put('/renew/:name', authorize, renewSubscription);
 

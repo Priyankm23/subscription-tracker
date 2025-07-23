@@ -12,13 +12,13 @@ authRouter.post('/signup',signUp);
 
 authRouter.post('/signin',signIn);
 
-authRouter.get('/google/login',
+authRouter.get('/google',
     passport.authenticate("google",{scope:["profile","email"]})
 );
 
-authRouter.get("/",(req,res)=>{
-     res.send("<a href=/api/v1/auth/google/login>login with google</a>")
-});
+// authRouter.get("/",(req,res)=>{
+//      res.send("<a href=/api/v1/auth/google/login>login with google</a>")
+// });
 
 export default authRouter;
 
