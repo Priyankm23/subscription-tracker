@@ -33,20 +33,16 @@ app.use('/api/v1/workflows',workflowRouter);
 app.use(errorMiddleware);
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get("/", (req, res) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.redirect("/auth.html");
-  }
-  return res.redirect("/dashboard"); // This route is protected and will serve index.html
-}); 
+app.get("/",(req,res)=>{
+  res.redirect("/index.html");
+});
 
 app.get('/dashboard', (req, res) => {
   const token = req.cookies.token;
   if (!token) {
-    return res.redirect("/auth.html");
+    return res.redirect("/index.html");
   }
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
 app.get('/auth/google/callback',

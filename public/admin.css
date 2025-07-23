@@ -1,6 +1,3 @@
-/* Add these styles to your existing styles.css file */
-
-/* Admin specific card background colors (optional, if you want different shades for admin cards) */
 #admin-card-total-subs {
   background-color: #f0f8ff; /* Light blue */
 }
@@ -9,28 +6,139 @@
   background-color: #fff0f5; /* Light pink */
 }
 
-/* If you want "Cancelled" text or "Renew" button styles to be specific to admin,
-   you would add them here. However, since these elements are already
-   styled for the user dashboard in the previous update to styles.css,
-   they should automatically apply to the admin dashboard if you reuse the classes.
-   So, no new CSS is strictly needed for those if the classes are consistent.
-*/
-
-/* Example for potential unique admin list item styling (if needed) */
-/* .subscription-list-grid#upcoming-renewals-list > div {
-    background-color: #e6ffe6;
-    border: 1px dashed #66cc66;
-} */
-
-/* Ensure any new elements in admin.html follow the existing styles */
-.admin-card-total-subs h3,
-.admin-card-total-users h3 {
-    color: #0066ff; /* Using Accent color for admin card headings */
+#admin-card-active-subs {
+  background-color: #e0ffe0; /* Light green */
 }
 
+#admin-card-cancelled-subs {
+  background-color: #ffe0e0; /* Light red */
+}
+
+
 /* Adjustments for the new list section in admin */
-#upcoming-renewals-list {
+#upcoming-renewals-list,
+#max-subs-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust columns for renewals list */
-    gap: 1.5rem;
+    /* Flexible columns: min size 280px, max 1 fraction of available space */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    padding: 10px; /* Adjust padding for lists */
+}
+
+.subscription-list-grid-item {
+    background-color: #f9f9f9; /* Light background for list items */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* -------------------------------------- */
+/* Responsive Adjustments for Mobile */
+/* -------------------------------------- */
+
+/* For screens up to 900px wide (e.g., tablets and large phones) */
+@media (max-width: 900px) {
+  body {
+    padding: 1rem; /* Reduce overall padding */
+  }
+
+  /* Center the dashboard content on smaller screens */
+  .dashboard {
+    max-width: 90%; /* Adjust width to leave some space on sides */
+    margin: 0 auto; /* Center horizontally */
+    gap: 1.5rem; /* Adjust gap for smaller screens */
+  }
+
+  .navbar-container {
+    flex-direction: column; /* Stack brand and menu items */
+    align-items: flex-start; /* Align to the left */
+    gap: 1rem; /* Space between stacked items */
+  }
+
+  .navbar-menu {
+    flex-direction: column; /* Stack menu items vertically */
+    gap: 0.5rem; /* Reduce gap between menu items */
+  }
+
+  /* Adjust the main cards grid on the dashboard */
+  .dashboard .cards {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 2 columns or stack based on width */
+    gap: 1rem; /* Reduce gap between cards */
+  }
+
+  /* Existing rule for subscription-list-grid (if it's also used for other grids) */
+  .subscription-list-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
+  }
+
+  /* Specific adjustment for the max/upcoming subscription lists */
+  #upcoming-renewals-list,
+  #max-subs-list {
+    grid-template-columns: 1fr; /* Stack these specific lists on medium-small screens */
+  }
+}
+
+/* For screens up to 600px wide (e.g., most smartphones) */
+@media (max-width: 600px) {
+  body {
+    padding: 0.5rem; /* Even smaller overall padding for small screens */
+  }
+
+  /* Ensure dashboard remains centered and adjusts width */
+  .dashboard {
+    max-width: 95%; /* Make it slightly wider for very small screens if needed */
+    margin: 0 auto; /* Ensure it stays centered */
+    gap: 1rem; /* Adjust gap */
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem; /* Smaller font for navigation brand */
+  }
+
+  .navbar-menu li a {
+    font-size: 0.9rem; /* Smaller font for navigation links */
+  }
+
+  /* Stack all main cards on very small screens */
+  .dashboard .cards {
+    grid-template-columns: 1fr; /* 1 card per row */
+    gap: 0.8rem; /* Further reduce gap */
+  }
+
+  .card h3 {
+    font-size: 1rem; /* Smaller headings in cards */
+  }
+
+  .card p {
+    font-size: 1.5rem; /* Smaller numbers in cards */
+  }
+
+  /* Existing rule for subscription-list-grid (ensuring it stacks on small screens) */
+  .subscription-list-grid {
+    grid-template-columns: 1fr; /* 1 card per row */
+  }
+
+  .chart-description {
+    font-size: 0.8rem; /* Smaller chart descriptions */
+  }
+
+  .subscription-list-grid-item span {
+    font-size: 0.9rem; /* Smaller text in list items */
+  }
+}
+
+/* For screens up to 400px wide (e.g., very small phones) */
+@media (max-width: 400px) {
+  .dashboard {
+    gap: 0.8rem; /* Further reduce gap */
+    /* max-width and margin: auto should still apply from 600px query */
+  }
+  /* Optional: further reduce padding on body if needed for tiny screens */
+  body {
+      padding: 0.2rem;
+  }
 }
