@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="admin.css"> <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -15,56 +15,67 @@
             <ul class="navbar-menu">
                 <li><a href="/dashboard">User Dashboard</a></li>
                 <li><a href="/subscription.html">Add Subscription</a></li>
-                <li><a href="/auth.html">Logout</a></li> </ul>
+                <li><a href="/auth.html">Logout</a></li>
+            </ul>
         </div>
     </nav>
 
     <div class="dashboard">
-        <div class="cards">
-            <div class="card" id="admin-card-total-subs">
-                <h3>Total Subscriptions (All Users)</h3>
-                <p id="admin-total-subs">0</p>
-            </div>
-            <div class="card" id="admin-card-total-users">
-                <h3>Total Registered Users</h3>
-                <p id="admin-total-users">0</p>
-            </div>
-            <div class="card" id="admin-card-active-subs">
-                <h3>Total Active Subscriptions</h3>
-                <p id="admin-active-subs">0</p>
-            </div>
-            <div class="card" id="admin-card-cancelled-subs">
-                <h3>Total Cancelled Subscriptions</h3>
-                <p id="admin-cancelled-subs">0</p>
+        <div class="admin-info">
+            <h2>Overall Statistics</h2>
+            <div class="cards">
+                <div class="card" id="admin-card-total-subs">
+                    <h3>Total Subscriptions (All Users)</h3>
+                    <p id="admin-total-subs">0</p>
+                </div>
+                <div class="card" id="admin-card-total-users">
+                    <h3>Total Registered Users</h3>
+                    <p id="admin-total-users">0</p>
+                </div>
+                <div class="card" id="admin-card-active-subs">
+                    <h3>Total Active Subscriptions</h3>
+                    <p id="admin-active-subs">0</p>
+                </div>
+                <div class="card" id="admin-card-cancelled-subs">
+                    <h3>Total Cancelled Subscriptions</h3>
+                    <p id="admin-cancelled-subs">0</p>
+                </div>
             </div>
         </div>
 
-        <div class="charts-section">
-            <div class="chart-container small-chart">
-                <canvas id="adminCategoryChart"></canvas>
-                <br>
-                <p class="chart-description">
-                    This chart shows the distribution of all subscriptions across various categories in the system.
+        <div class="admin-info">
+            <h2>Subscription Categories</h2>
+            <div class="charts-section">
+                <div class="chart-container small-chart" style="margin-bottom: 2rem;">
+                    <canvas id="adminCategoryChart"></canvas>
+                    <br>
+                    <p class="chart-description">
+                        This chart shows the distribution of all subscriptions across various categories in the system.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-info">
+            <h2>Maximum Subscription Per User (Active)</h2>
+            <div class="list">
+                <div class="subscription-list-grid" id="max-subs-list">
+                    </div>
+                <p class="chart-description" style="margin-top: 20px;">
+                    This section shows the active subscription with the highest price for each user.
                 </p>
             </div>
         </div>
 
-        <div class="list">
-            <h4>Maximum Subscription Per User (Active)</h4>
-            <div class="subscription-list-grid" id="max-subs-list">
-                </div>
-            <p class="chart-description" style="margin-top: 20px;">
-                This section shows the active subscription with the highest price for each user.
-            </p>
-        </div>
-
-        <div class="list">
-            <h4>Latest Upcoming Renewals (1 Per User)</h4>
-            <div class="subscription-list-grid" id="upcoming-renewals-list">
-                </div>
-            <p class="chart-description" style="margin-top: 20px;">
-                This section shows the single upcoming active subscription renewal that is furthest in the future for each user.
-            </p>
+        <div class="admin-info">
+            <h2>Latest Upcoming Renewals (1 Per User)</h2>
+            <div class="list">
+                <div class="subscription-list-grid" id="upcoming-renewals-list">
+                    </div>
+                <p class="chart-description" style="margin-top: 20px;">
+                    This section shows the single upcoming active subscription renewal that is furthest in the future for each user.
+                </p>
+            </div>
         </div>
     </div>
 
