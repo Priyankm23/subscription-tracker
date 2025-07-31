@@ -5,6 +5,28 @@ import Subscription from "../models/subscriptionModel.js";
 import dayjs from "dayjs";
 import { sendReminderEmail } from "../utils/send-emails.js";
 import { subscribe } from "diagnostics_channel";
+import twilio from "twilio";
+import {TWILIO_ACCOUNT_SID,TWILIO_AUTH_TOKEN,TWILIO_PHONE_NUMBER} from "../config/env.js";
+
+const client = new twilio(
+    TWILIO_ACCOUNT_SID,
+    TWILIO_AUTH_TOKEN
+);
+
+export async function sendSubscriptionReminder(toPhoneNumber, userName, subscriptionName, renewalDate) {
+  try {
+    const message = await client.messages.create({
+      body: `Hi ${userName}, your subscription for "${subscriptionName}" renews on ${renewalDate}. Don't forget!`,
+      from: TWILIO_PHONE_NUMBER,
+      to: toPhoneNumber  // e.g., '+91XXXXXXXXXX'
+    });
+
+    console.log('SMS sent:', message.sid);
+  } catch (error) {
+    console.error('Failed to send SMS:', error.message);
+  }
+};
+
 
 const REMINDERS=[7,5,2,1];
 

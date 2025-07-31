@@ -106,7 +106,7 @@ export const createSubscription=async(req,res,next)=>{
         headers:{
             'content-type': 'application/json'
         },
-        retries: 7,
+        retries: 0,
         retryDelay: 300000,
     });
 
