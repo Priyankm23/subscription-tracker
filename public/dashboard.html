@@ -14,7 +14,9 @@
   <body>
     <nav class="navbar">
       <div class="navbar-container">
-        <div class="navbar-brand">📊Subscription tracker</div>
+        <div class="navbar-brand">
+          Sub track - your own subscription tracker
+        </div>
         <ul class="navbar-menu">
           <li><a href="subscription.html">Add subscription</a></li>
           <li><a href="info.html">Insights</a></li>
@@ -22,7 +24,20 @@
         </ul>
       </div>
     </nav>
+
+    <section class="greeting">
+      <h1>Welcome to Sub Track!</h1>
+      <p class="greeting-subtext">
+        Sub Track is your personal subscription management tool. Easily keep
+        track of all your active, cancelled, and expired subscriptions in one
+        place. Monitor your spending across multiple currencies, set renewal
+        reminders, and view detailed analytics to understand where your money
+        goes. Stay organised and never miss a renewal again! 🚀
+      </p>
+    </section>
+
     <div class="dashboard">
+      <h3 style="color: #ff3333; text-align: center">General Analytics</h3>
       <div class="cards">
         <div class="card" id="div1">
           <h3>Total Subscriptions</h3>
@@ -42,9 +57,10 @@
         </div>
       </div>
 
+      <h3 style="color: #ff3333; text-align: center">Graphical Analytics</h3>
       <div class="charts-section">
         <div class="chart-container small-chart">
-           <h3>Subscriptions by Category</h3>
+          <h3>Subscriptions by Category</h3>
           <canvas id="categoryChart"></canvas>
           <br />
           <p class="chart-description">
@@ -64,7 +80,7 @@
       </div>
 
       <div class="list">
-        <h3 style="color: #ff3333;">Your Subscriptions</h3>
+        <h3 style="color: #ff3333">Your Subscriptions</h3>
         <div id="subscription-list" class="subscription-list-grid"></div>
       </div>
     </div>
@@ -150,6 +166,10 @@
         </form>
       </div>
     </div>
+
+    <footer class="footer">
+      <p>&copy; 2025 Subscription Tracker. All rights reserved.</p>
+    </footer>
 
     <script src="script.js"></script>
   </body>

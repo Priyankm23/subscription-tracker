@@ -5,7 +5,7 @@
     max-width: 1200px; /* Consistent max width with info page */
     margin: 2rem auto; /* Centered with top/bottom margin */
     padding: 2rem; /* Consistent internal padding for the overall container */
-    background: #ffffff; /* White background for the main wrapper */
+    background: #ffd8be; /* White background for the main wrapper */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
     border: 1px solid #000000; /* Black border from info page */
@@ -92,6 +92,7 @@
 .charts-section {
     /* No direct padding/background/border here, as it's now wrapped by .admin-info */
     text-align: center; /* Center chart */
+    width: 100%;
 }
 
 /* List Containers - Adopted from .info-list, now within .admin-info */
