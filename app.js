@@ -37,6 +37,11 @@ app.get("/",(req,res)=>{
   res.redirect("/index.html");
 });
 
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'UP', timestamp: new Date() });
+});
+
+
 app.get('/dashboard', (req, res) => {
   const token = req.cookies.token;
   if (!token) {
